@@ -1,0 +1,86 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	{%load static%}
+	{%load custom_tags%}
+    <link rel="stylesheet" href="{%static 'css/style.css'%}">
+    <link rel="stylesheet" href="{%static 'css/style_plan.css'%}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@600&family=Oswald&display=swap">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+</head>
+<body>
+    <div class="home">
+        <a href="{% url 'polls:index'%}"><img src="{%static 'image/1.png'%}"></a>
+        <h1>Automatic Speed Effective</h1>
+     </div>
+
+     <div class="form_contain">
+     <div class="form">
+         <form action="" method="POST">
+            <label for="new_word">New</label>
+            {%csrf_token%}
+	    {{form}}
+            <input type="submit" value="Enter" style="color:white;background-color: rgba(72, 142, 144, 0.596);font-family: 'Nunito',sans-serif;border-radius: 20%;padding: 0.5%;">
+        </form>
+     </div>
+     </div>
+     <div>
+	<div class="Num_plan"></div>
+         <div class="process">
+             <ul>
+		{%if plans %}
+		{% for pl in plans %}
+                <li>
+		    <div class="process_title">{{pl.plan}}</div>
+                    <div class="process_bar">
+                        <div class="bar_back">
+			{% if pl.status >= 0 %}
+			{% rate_plan pl.date_end pl.date_start as rate %}
+			{% if rate < 60%}
+			<div class="bar_front" style="width:{{rate}}%"></div>
+                        {% else%}
+			<div class="bar_front" style="width:{{rate}}%;background:rgb(210,27,27);background:linear-gradient(144deg,rgba(210,21,21,1)0%,rgba(218,159,144,1)45%,rgba(255,255,255,1)100%)"></div>
+			{% endif%}
+			<div class="content_bar">{{pl.status }} Days left in {%dead_plan pl.date_end pl.date_start%} all 
+                        </div>
+			{% else %}
+			<div class="bar_front"></div>
+			<div class="content_bar">Not in process start at :<span>{{pl.date_start|date:"d m,Y"}}</span></div>
+                       {%endif%}
+			 </div>
+			</div>
+		    <a href="{% url 'polls:delete-plan' pl.id %}">Delete</a>               
+                </li>
+		{%endfor%}
+		{%else%}
+		<li>No things here</li>
+		{%endif%}
+                    </div>
+		   </div>
+                </li>
+             </ul>
+         </div>
+     </div>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	{%block javascript %}
+	<script>
+		$(document).ready(function(){
+			$.ajax({
+				type:'GET',
+				url:"{% url 'polls:change_bar'%}",
+				success:function(response){
+				$(".Num_plan").html(response["lenght"]+" Plans to do")
+				},
+				error:function(response){
+					console.log(response)
+				}	
+			});
+		});
+	</script>
+	{%endblock javascript%}
+</body>
+</html>

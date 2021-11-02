@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {%load static%}
+    <link rel="stylesheet" href="{% static 'css/style.css'%}">
+    <link rel="stylesheet" href="{% static 'css/style_english.css'%}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@600&family=Oswald&display=swap">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+</head>
+<body>
+    <div class="home">
+        <a href="{% url 'polls:index'%}"><img src="{%static 'image/1.png'%}"></a>
+        <h1>Automatic Speed Effective</h1>
+     </div>
+
+     <div class="form_contain">
+     <div class="form">
+         <form action="">
+            <label for="new_word">Search</label>
+            <input type="text" id="new_word" name="newword" >
+            <input type="submit" value="Enter" style="color:white;background-color: rgba(72, 142, 144, 0.596);font-family: 'Nunito',sans-serif;border-radius: 20%;padding: 0.5%;">
+        </form>
+     </div>
+     <div class="form">
+        <form action="" method="POST" >
+           <label for="new_word">New </label>
+           {%csrf_token%}
+	   {{form}}
+           <input type="submit" value="Enter" name="submit_newword" style="color:white;background-color: rgba(72, 142, 144, 0.596);font-family: 'Nunito',sans-serif;border-radius: 20%;padding: 0.5%;">
+       </form>
+    </div>
+     </div>
+
+     <div class="frame_eng">
+         <div class="content">
+		<p id="word"></p>
+		<ul>
+			<li><a href="" class="link_word" id="GD" target="_blank">Google dich</a></li>
+			<li><a href="" class="link_word" id="CD" target="_blank">Cambridge dictionary</a></li>
+			<li><a href="" class="link_word" id="OD" target="_blank">Oxford dictionary</a></li>
+		</ul>
+		<form  id="form_mean">
+			<lable id="lable">Not yet</lable>
+			{{form_mean}}
+			<input type="submit" name="submit_mean" value="SUBMIT" id="submit_mean" >
+		</form>
+		<button id="button_1">Nhan</button>
+		
+         </div>
+         <div class="words">
+            <ul>
+		{%for word in words%}
+		  <li><button class="button_word" id="{{word.id}}"">{{word}}</button></li>
+		{%endfor%}
+	    </ul>
+         </div>
+     </div>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	{%block javascript%}
+	<script>
+	$(document).ready(function(){
+		$(".button_word").click(function(){
+			$("#word").text($(this).html())
+			$("#GD").attr("href","https://translate.google.com/?hl=vi&sl=auto&tl=vi&text="+$(this).html()+"&op=translate");
+			$("#CD").attr("href","https://dictionary.cambridge.org/dictionary/english-vietnamese/"+$(this).html());
+			$("#OD").attr("href","https://oxfordlearnersdictionaries.com/definition/english/"+$(this).html());
+			
+			});
+		$("#form_mean").submit(function(e){
+			e.preventDefault();
+			var serializedData=$(this).serialize();
+			$.ajax({
+				type:'POST',
+				url:"{%url 'polls:update_mean' %}",
+				data:serializedData+'&csrfmiddlewaretoken={{csrf_token}}'+'&word='+text($("#word").text()),
+				success:function(response){
+					alert("Success")
+					},	
+				error:function(response){
+					alert("Not success")
+					}
+					});
+				});	
+			});		
+	</script>
+	{%endblock javascript%}
+</body>
+</html>

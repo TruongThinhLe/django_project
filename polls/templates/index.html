@@ -1,0 +1,29 @@
+
+{%load static %}
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" type="text/css" href="{% static 'css/style.css'%}">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@600&family=Oswald&display=swap>"
+</head>
+<body>
+ <div class="home">
+	<a href="{%url 'polls:index'%}"><img src="{%static 'image/1.png'%}"></a>
+	<h1>Automatic Speed Effective</h1>	
+ </div>
+ <div class="container">
+	<div class="card">
+		<a href="{% url 'polls:english'%}" target="_blank">English </a>
+	</div>
+	<div class="card">
+		<a href="{% url 'polls:plan'%}" target="_blank">Plan </a>
+	</div>	
+	<div class="card">
+		<a href="{% url 'polls:english'%}" target="_blank">English </a>
+	</div>
+	<div class="card">
+		<a href="{% url 'polls:english'%}" target="_blank">English </a>
+	</div>
+ </div>
+</body>
