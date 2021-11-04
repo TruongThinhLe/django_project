@@ -61,7 +61,17 @@ def change_bar(request):
     return JsonResponse({},status=400)
 def update_mean(request,*args,**kwargs):
     if request.is_ajax and request.method=="POST":
+        model=English.objects.get(word=request.POST['word'])
+        model.meaning=request.POST['mean']
+        model.example=request.POST['example']
+        model.save()
         print(request.POST)
-        return JsonResponse({},status=200)
+        return JsonResponse({"mean":model.meaning,"example":model.example},status=200)
+    return JsonResponse({},status=400)
+def show_mean(request):
+    if request.is_ajax and request.method=="GET":
+        word=request.GET.get("word",None)
+        obj=English.objects.get(word=word)
+        return JsonResponse({"mean":obj.meaning,"example":obj.example},status=200)
     return JsonResponse({},status=400)
 # Create your views here.

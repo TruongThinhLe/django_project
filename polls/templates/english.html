@@ -42,11 +42,12 @@
 			<li><a href="" class="link_word" id="OD" target="_blank">Oxford dictionary</a></li>
 		</ul>
 		<form  id="form_mean">
-			<lable id="lable">Not yet</lable>
+			<lable id="lable"></lable>
 			{{form_mean}}
 			<input type="submit" name="submit_mean" value="SUBMIT" id="submit_mean" >
 		</form>
-		<button id="button_1">Nhan</button>
+		<div id="mean"></div>
+		<div id="example"></div>                                                                                                                                                
 		
          </div>
          <div class="words">
@@ -62,21 +63,36 @@
 	<script>
 	$(document).ready(function(){
 		$(".button_word").click(function(){
-			$("#word").text($(this).html())
+			var word=$(this).html()
+			$("#word").text(word)
 			$("#GD").attr("href","https://translate.google.com/?hl=vi&sl=auto&tl=vi&text="+$(this).html()+"&op=translate");
 			$("#CD").attr("href","https://dictionary.cambridge.org/dictionary/english-vietnamese/"+$(this).html());
 			$("#OD").attr("href","https://oxfordlearnersdictionaries.com/definition/english/"+$(this).html());
-			
+			$.ajax({
+				type:'GET',
+				url:"{%url 'polls:show_mean'%}",
+				data:{"word":word},
+				success :function(response){
+					$("#mean").html("Meanning: "+response["mean"]);
+					$("#example").html("Example: "+response["example"]);
+				},
+				error:function(){
+					alert("Something wrong")
+				}
+			});
 			});
 		$("#form_mean").submit(function(e){
 			e.preventDefault();
 			var serializedData=$(this).serialize();
+			var id=$("#word").text()
 			$.ajax({
 				type:'POST',
 				url:"{%url 'polls:update_mean' %}",
-				data:serializedData+'&csrfmiddlewaretoken={{csrf_token}}'+'&word='+text($("#word").text()),
+				data:serializedData+'&csrfmiddlewaretoken={{csrf_token}}'+'&word='+id,
 				success:function(response){
 					alert("Success")
+					$("#mean").html("Meaning: "+response["mean"]);
+					$("#example").html("English: "+response["example"]);
 					},	
 				error:function(response){
 					alert("Not success")
