@@ -32,3 +32,59 @@
     overflow-y: scroll;
     box-shadow:1px 10px 20px rgba(0,0,0,0.5);
 }
+.button_word{
+    background-color: #c2fbd7;
+    border-radius: 50px;
+    border-width: 0;
+    box-shadow: rgba(25,25,25,.04) 0 0 1px 0,rgba(0,0,0,.1) 0 3px 4px 0;
+    color: green;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 1em;
+    height: 50px;
+    padding: 0 25px;
+    transition: all 200ms;
+    margin: 10px;
+}
+.button_word :hover{
+    background-color: #afe6c3;
+    transform: scale(1.05);
+}
+.content>ul{
+    list-style-type: none;
+    margin-bottom: 30px;
+}
+.content > ul >li{
+    display: inline;
+    align-content: center;
+}
+.content >ul>li>a{
+    width: 100px;
+    background-color: rgb(62, 177, 206);
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 10px;
+    margin: 30px;
+    padding: 7px;
+}
+
+.content>p{
+    font-size: 90px;
+    color: rgb(165, 75, 15);
+    width: 100%;
+    text-align: center;
+}
+#mean{
+    color: rgb(62, 129, 206);
+}
+#example{
+    color: rgb(62, 129, 206);
+}
+#form_mean{
+    width: 100%;
+    font-size: 20px;
+    background-color: rgb(233, 184, 229);
+    margin-bottom: 30px;
+    color: rgba(0,0,0,.7);
+}

@@ -35,21 +35,21 @@
 
      <div class="frame_eng">
          <div class="content">
-		<p id="word"></p>
-		<ul>
-			<li><a href="" class="link_word" id="GD" target="_blank">Google dich</a></li>
-			<li><a href="" class="link_word" id="CD" target="_blank">Cambridge dictionary</a></li>
-			<li><a href="" class="link_word" id="OD" target="_blank">Oxford dictionary</a></li>
-		</ul>
-		<form  id="form_mean">
-			<lable id="lable"></lable>
-			{{form_mean}}
-			<input type="submit" name="submit_mean" value="SUBMIT" id="submit_mean" >
-		</form>
-		<div id="mean"></div>
-		<div id="example"></div>                                                                                                                                                
-		
+			<ul>
+				<li><a href="" class="link_word" id="GD" target="_blank">Google</a> </li>
+				<li><a href="" class="link_word" id="CD" target="_blank">Cambridge </a></li>
+				<li><a href="" class="link_word" id="OD" target="_blank">Oxford </a></li>
+			</ul>
+			<form  id="form_mean">
+				<lable id="lable"></lable>
+				{{form_mean}}
+				<input type="submit" name="submit_mean" value="SUBMIT" id="submit_mean" >
+			</form>
+			<p id="word"></p>
+			<div id="mean"></div>
+			<div id="example"></div>                                                                                                                                                
          </div>
+
          <div class="words">
             <ul>
 		{%for word in words%}
