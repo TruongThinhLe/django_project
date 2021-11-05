@@ -2,7 +2,7 @@ from django.shortcuts import render,redirect
 from django.http import HttpResponse,JsonResponse
 from .models import *
 from .form import *
-from datetime import datetime,timedelta
+from datetime import datetime,timedelta,date
 
 
 def index(request):
@@ -17,7 +17,8 @@ def english(request):
             if form.is_valid():
                 form.save()
                 return redirect('/english')
-    words=English.objects.all()
+    current_week=date.today().isocalendar()[1]
+    words=English.objects.filter(pub_date__week=current_week)
     context={'words':words,'form':form,'form_mean':form_mean}
     return render(request,'english.html',context)
 def plan(request):
@@ -74,4 +75,6 @@ def show_mean(request):
         obj=English.objects.get(word=word)
         return JsonResponse({"mean":obj.meaning,"example":obj.example},status=200)
     return JsonResponse({},status=400)
+
+
 # Create your views here.

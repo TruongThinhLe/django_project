@@ -53,11 +53,14 @@
          <div class="words">
             <ul>
 		{%for word in words%}
-		  <li><button class="button_word" id="{{word.id}}"">{{word}}</button></li>
+		  <li><button class="button_word" id="{{word.id}}">{{word}}</button></li>
 		{%endfor%}
 	    </ul>
          </div>
      </div>
+	 <div class="frame_eng">
+		 <div></div>
+	 </div>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	{%block javascript%}
 	<script>
