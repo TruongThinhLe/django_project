@@ -20,7 +20,7 @@
     border-bottom: 2px solid rgba(0,0,0,0.5);
 }
 .words{
-    width: 200px;
+    width: auto;
     height: 500px;
     border:1px solid rgba(0,0,0,0.2);
     font-size:25px;
@@ -39,12 +39,13 @@
     box-shadow: rgba(25,25,25,.04) 0 0 1px 0,rgba(0,0,0,.1) 0 3px 4px 0;
     color: green;
     cursor: pointer;
-    display: inline-block;
     font-size: 1em;
     height: 50px;
     padding: 0 25px;
     transition: all 200ms;
-    margin: 10px;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    display: inline;
 }
 .button_word :hover{
     background-color: #afe6c3;
@@ -87,4 +88,31 @@
     background-color: rgb(233, 184, 229);
     margin-bottom: 30px;
     color: rgba(0,0,0,.7);
+}
+.words>ul{
+   display:flex;
+   flex-direction: column;
+   align-items: center;
+   justify-content: center;
+}
+.words>ul>li{
+    width: auto;
+    height:auto;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.delete_word{
+    text-decoration: none;
+    font-weight: bold;
+    color:#afe6c3;
+    text-align: center;
+    display: inline-block;
+    
+}
+.delete_word:hover{
+    background-color: rgba(251, 5, 5, 0.452);
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
 }

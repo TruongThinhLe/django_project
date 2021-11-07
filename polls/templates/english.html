@@ -53,7 +53,10 @@
          <div class="words">
             <ul>
 		{%for word in words%}
-		  <li><button class="button_word" id="{{word.id}}">{{word}}</button></li>
+		  <li>
+			  <button class="button_word" id="{{word.id}}">{{word}}</button>
+			  <a class="delete_word" href="{%url 'polls:delete-word' word.id%}" >x<a>
+			</li>
 		{%endfor%}
 	    </ul>
          </div>

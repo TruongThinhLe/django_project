@@ -43,6 +43,10 @@ def delete_plan(request,plan_id):
     plan=Plan.objects.get(pk=plan_id)
     plan.delete()
     return redirect('/plan')
+def delete_word(request,word_id):
+    word=English.objects.get(pk=word_id)
+    word.delete()
+    return redirect('/english')
 
 
 
