@@ -5,6 +5,7 @@ class English(models.Model):
     pub_date=models.DateField(auto_now_add=True)
     meaning= models.TextField(max_length=50,null=True)
     example=models.TextField(max_length=100,null=True)
+    type=models.TextField(max_length=10,null=True)
     def __str__ (self):
         return self.word
 class Plan(models.Model):

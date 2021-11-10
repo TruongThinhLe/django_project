@@ -1,10 +1,12 @@
 from django.shortcuts import render,redirect
+from django.core.exceptions import MultipleObjectsReturned
 from django.http import HttpResponse,JsonResponse
 from .models import *
 from .form import *
 from datetime import datetime,timedelta,date
-
-
+import random
+from django.contrib import messages
+from .auto import *
 def index(request):
 	return render(request,'index.html')
 def english(request):
@@ -13,14 +15,27 @@ def english(request):
     if request.method=='POST':
         if 'submit_newword' in request.POST:
             print(request.POST)
-            form = Word_form(request.POST)
-            if form.is_valid():
-                form.save()
+            if English.objects.filter(word=request.POST['word']).exists():
+                messages.error(request, 'Word already stored!')
                 return redirect('/english')
+            else:
+                form = Word_form(request.POST)
+                if form.is_valid():
+                    form.save()
+                    data=auto_mean(request.POST['word'])
+                    model=English.objects.get(word=request.POST['word'])
+                    model.meaning=data[1]
+                    model.example=data[2]
+                    model.type=data[0]
+                    model.save()
+                    return redirect('/english') 
     current_week=date.today().isocalendar()[1]
     words=English.objects.filter(pub_date__week=current_week)
-    context={'words':words,'form':form,'form_mean':form_mean}
+    words_ques=list(English.objects.all())
+    questions=random.sample(words_ques,int(len(words_ques)*2/3))
+    context={'words':words,'form':form,'form_mean':form_mean,'questions':questions}
     return render(request,'english.html',context)
+
 def plan(request):
     form=Plan_form()
     if request.method=='POST':
@@ -31,7 +46,6 @@ def plan(request):
             return redirect('/plan')
             
     plans=Plan.objects.all()
-    rate={}
     for plan in plans :
         plan.status=get_status(plan.date_end,plan.date_start)
         plan.save()
@@ -64,21 +78,22 @@ def change_bar(request):
         len_plan=len(Plan.objects.all())
         return JsonResponse({"lenght":len_plan},status=200)
     return JsonResponse({},status=400)
-def update_mean(request,*args,**kwargs):
+def update_mean(request):
     if request.is_ajax and request.method=="POST":
         model=English.objects.get(word=request.POST['word'])
         model.meaning=request.POST['mean']
         model.example=request.POST['example']
+        model.type=request.POST['type']
         model.save()
         print(request.POST)
-        return JsonResponse({"mean":model.meaning,"example":model.example},status=200)
-    return JsonResponse({},status=400)
+        return JsonResponse({"mean":model.meaning,"example":model.example,"type":model.type},status=200)
+    return JsonResponse({"error":"not found"},status=400)
 def show_mean(request):
     if request.is_ajax and request.method=="GET":
         word=request.GET.get("word",None)
         obj=English.objects.get(word=word)
-        return JsonResponse({"mean":obj.meaning,"example":obj.example},status=200)
-    return JsonResponse({},status=400)
+        return JsonResponse({"mean":obj.meaning,"example":obj.example,"type":obj.type},status=200)
+    return JsonResponse({"error":"not found"},status=400)
 
 
 # Create your views here.

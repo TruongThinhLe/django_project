@@ -32,6 +32,7 @@
        </form>
     </div>
      </div>
+	 {% include 'messages.html' %}
 
      <div class="frame_eng">
          <div class="content">
@@ -47,14 +48,19 @@
 			</form>
 			<p id="word"></p>
 			<div id="mean"></div>
-			<div id="example"></div>                                                                                                                                                
+			<div id="example"></div>    
+			<div id="type"></div>                                                                                                                                            
          </div>
 
          <div class="words">
             <ul>
 		{%for word in words%}
 		  <li>
-			  <button class="button_word" id="{{word.id}}">{{word}}</button>
+			  {% if word.meaning  %}
+			  <button class="button_word" id="{{word.id}}" >{{word}}</button>
+			  {%else %}
+			  <button class="button_word" id="{{word.id}}" style="background-color: rgb(233, 138, 109);" >{{word}}</button>
+			  {%endif%}
 			  <a class="delete_word" href="{%url 'polls:delete-word' word.id%}" >x<a>
 			</li>
 		{%endfor%}
@@ -62,7 +68,15 @@
          </div>
      </div>
 	 <div class="frame_eng">
-		 <div></div>
+		 <div class="quiz">
+			<ul>
+			 {%for question in questions %}
+				<li class="quiz_ques" id="word{{question.id}}" data-id="{{question.id}}">
+					{{question.meaning}} <span style="display:none" >  {{question.word}}</span>
+				</li>
+			{%endfor%}
+			</ul>
+		 </div>
 	 </div>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	{%block javascript%}
@@ -79,14 +93,19 @@
 				url:"{%url 'polls:show_mean'%}",
 				data:{"word":word},
 				success :function(response){
-					$("#mean").html("Meanning: "+response["mean"]);
+					$("#mean").html("Mean: "+response["mean"]);
 					$("#example").html("Example: "+response["example"]);
+					$("#type").html("Type: "+response["type"]);
 				},
-				error:function(){
-					alert("Something wrong")
+				error:function(response){
+					alert("Something wrong "+response.responseJSON.error)
 				}
 			});
 			});
+		$(".quiz_ques").click(function(){
+			var id=$(this).attr("data-id");
+			$("#word"+id).children("span").attr("style","display:absolute;color:pink")
+		});
 		$("#form_mean").submit(function(e){
 			e.preventDefault();
 			var serializedData=$(this).serialize();
@@ -99,9 +118,11 @@
 					alert("Success")
 					$("#mean").html("Meaning: "+response["mean"]);
 					$("#example").html("English: "+response["example"]);
+					$("#type").html("Type:"+response["type"]);
 					},	
 				error:function(response){
-					alert("Not success")
+					alert("Not success");
+					console.log(response);
 					}
 					});
 				});	
