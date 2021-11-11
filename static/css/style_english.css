@@ -9,6 +9,7 @@
     display:flex;
     flex-direction: row;
     box-shadow: 0px 0px 10px rgb(35, 170, 194);
+    margin-bottom: 50px;
 }
 
 .content{
@@ -18,9 +19,10 @@
     padding:10px;
     border-radius: 5px;
     border-bottom: 2px solid rgba(0,0,0,0.5);
+    margin-bottom: 20px;
 }
 .words{
-    width: 200px;
+    width: auto;
     height: 500px;
     border:1px solid rgba(0,0,0,0.2);
     font-size:25px;
@@ -31,4 +33,118 @@
     border-radius:5px;
     overflow-y: scroll;
     box-shadow:1px 10px 20px rgba(0,0,0,0.5);
+}
+.button_word{
+    background-color: #c2fbd7;
+    border-radius: 50px;
+    border-width: 0;
+    box-shadow: rgba(25,25,25,.04) 0 0 1px 0,rgba(0,0,0,.1) 0 3px 4px 0;
+    color: green;
+    cursor: pointer;
+    font-size: 1em;
+    height: 50px;
+    padding: 0 25px;
+    transition: all 200ms;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    display: inline;
+}
+.button_word :hover{
+    background-color: #afe6c3;
+    transform: scale(1.05);
+}
+.content>ul{
+    list-style-type: none;
+    margin-bottom: 30px;
+}
+.content > ul >li{
+    display: inline;
+    align-content: center;
+}
+.content >ul>li>a{
+    width: 100px;
+    background-color: rgb(62, 177, 206);
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 10px;
+    margin: 30px;
+    padding: 7px;
+}
+
+.content>p{
+    font-size: 90px;
+    color: rgb(165, 75, 15);
+    width: 100%;
+    text-align: center;
+}
+#mean{
+    color: rgb(62, 129, 206);
+}
+#example{
+    color: rgb(62, 129, 206);
+}
+#type{
+    color: rgb(62, 129, 206);
+}
+#form_mean{
+    width: 100%;
+    font-size: 20px;
+    background-color: rgb(233, 184, 229);
+    margin-bottom: 30px;
+    color: rgba(0,0,0,.7);
+}
+.words>ul{
+   display:flex;
+   flex-direction: column;
+   align-items: center;
+   justify-content: center;
+}
+.words>ul>li{
+    width: auto;
+    height:auto;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.delete_word{
+    text-decoration: none;
+    font-weight: bold;
+    color:#afe6c3;
+    text-align: center;
+    display: inline-block;
+    
+}
+.delete_word:hover{
+    background-color: rgba(251, 5, 5, 0.452);
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+}
+.quiz{
+    width: 500px;
+    height: 500px;
+}
+.quiz>ul{
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items:center ;
+}
+.quiz>ul>li{
+    background-color: #c2fbd7;
+    border-radius: 50px;
+    border-width: 0;
+    box-shadow: rgba(25,25,25,.04) 0 0 1px 0,rgba(0,0,0,.1) 0 3px 4px 0;
+    color: green;
+    cursor: pointer;
+    font-size: 1em;
+    height: 50px;
+    padding: 0 25px;
+    transition: all 200ms;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    display:flex;
+    justify-content: center;
+    align-items: center;
 }
