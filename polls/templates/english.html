@@ -17,23 +17,22 @@
 
      <div class="form_contain">
      <div class="form">
-         <form action="">
-            <label for="new_word">Search</label>
-            <input type="text" id="new_word" name="newword" >
-            <input type="submit" value="Enter" style="color:white;background-color: rgba(72, 142, 144, 0.596);font-family: 'Nunito',sans-serif;border-radius: 20%;padding: 0.5%;">
+         <form action="" id="form_search">
+            <label>Search</label>
+            <input type="text" id="search_word" name="search_word" >
+            <input type="submit" name="submit_search "value="Enter" style="color:white;background-color: rgba(72, 142, 144, 0.596);font-family: 'Nunito',sans-serif;border-radius: 20%;padding: 0.5%;">
         </form>
      </div>
      <div class="form">
         <form action="" method="POST" >
            <label for="new_word">New </label>
            {%csrf_token%}
-	   {{form}}
+	   		{{form}}
            <input type="submit" value="Enter" name="submit_newword" style="color:white;background-color: rgba(72, 142, 144, 0.596);font-family: 'Nunito',sans-serif;border-radius: 20%;padding: 0.5%;">
        </form>
     </div>
      </div>
 	 {% include 'messages.html' %}
-
      <div class="frame_eng">
          <div class="content">
 			<ul>
@@ -42,14 +41,13 @@
 				<li><a href="" class="link_word" id="OD" target="_blank">Oxford </a></li>
 			</ul>
 			<form  id="form_mean">
-				<lable id="lable"></lable>
 				{{form_mean}}
-				<input type="submit" name="submit_mean" value="SUBMIT" id="submit_mean" >
+				<input type="submit" name="submit_mean" value="ENTER" id="submit_mean" >
 			</form>
 			<p id="word"></p>
-			<div id="mean"></div>
-			<div id="example"></div>    
-			<div id="type"></div>                                                                                                                                            
+			<div id="mean"><strong>Mean: </strong><span></span></div>
+			<div id="example"><strong>Example: </strong><span></span></div>    
+			<div id="type"><strong>Type: </strong><span></span></div>                                                                                                                                            
          </div>
 
          <div class="words">
@@ -93,9 +91,9 @@
 				url:"{%url 'polls:show_mean'%}",
 				data:{"word":word},
 				success :function(response){
-					$("#mean").html("Mean: "+response["mean"]);
-					$("#example").html("Example: "+response["example"]);
-					$("#type").html("Type: "+response["type"]);
+					$("#mean").find("span").html(response["mean"]);
+					$("#example").find("span").html(response["example"]);
+					$("#type").find("span").html(response["type"]);
 				},
 				error:function(response){
 					alert("Something wrong "+response.responseJSON.error)
@@ -106,14 +104,32 @@
 			var id=$(this).attr("data-id");
 			$("#word"+id).children("span").attr("style","display:absolute;color:pink")
 		});
+		$("#form_search").submit(function(e){
+			e.preventDefault();
+			var serData=$(this).serialize();
+			$.get("{%url 'polls:search_word'%}",serData)
+			.done(function(response){
+				$("#word").text(response["word"])
+				$("#mean").find("span").html(response["mean"]);
+				$("#example").find("span").html(response["example"]);
+				$("#type").find("span").html(response["type"]);
+			alert(response["mes"]);
+			})
+			.fail(function(response){
+				alert("Not found")
+			})
+			;
+		});
 		$("#form_mean").submit(function(e){
 			e.preventDefault();
-			var serializedData=$(this).serialize();
-			var id=$("#word").text()
+			var serializedData=$("#form_mean").serialize();
+			var id=$("#word").text();
+			var submit=$("#submit_mean").serialize();
+			var total=serializedData+submit;
 			$.ajax({
 				type:'POST',
 				url:"{%url 'polls:update_mean' %}",
-				data:serializedData+'&csrfmiddlewaretoken={{csrf_token}}'+'&word='+id,
+				data:total+'&csrfmiddlewaretoken={{csrf_token}}'+'&word='+id+'&submit_mean=ENTER',
 				success:function(response){
 					alert("Success")
 					$("#mean").html("Meaning: "+response["mean"]);

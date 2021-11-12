@@ -22,12 +22,15 @@ def english(request):
                 form = Word_form(request.POST)
                 if form.is_valid():
                     form.save()
-                    data=auto_mean(request.POST['word'])
-                    model=English.objects.get(word=request.POST['word'])
-                    model.meaning=data[1]
-                    model.example=data[2]
-                    model.type=data[0]
-                    model.save()
+                    try:
+                        data=auto_mean(request.POST['word'])
+                        model=English.objects.get(word=request.POST['word'])
+                        model.meaning=data[1]
+                        model.example=data[2]
+                        model.type=data[0]
+                        model.save()
+                    except IndexError:
+                        pass
                     return redirect('/english') 
     current_week=date.today().isocalendar()[1]
     words=English.objects.filter(pub_date__week=current_week)
@@ -62,8 +65,6 @@ def delete_word(request,word_id):
     word.delete()
     return redirect('/english')
 
-
-
 def get_status(date_end,date_start):
     now=datetime.date(datetime.now())
     days=timedelta(days=0)
@@ -80,13 +81,16 @@ def change_bar(request):
     return JsonResponse({},status=400)
 def update_mean(request):
     if request.is_ajax and request.method=="POST":
-        model=English.objects.get(word=request.POST['word'])
-        model.meaning=request.POST['mean']
-        model.example=request.POST['example']
-        model.type=request.POST['type']
-        model.save()
         print(request.POST)
-        return JsonResponse({"mean":model.meaning,"example":model.example,"type":model.type},status=200)
+        if 'submit_mean' in request.POST:
+            model=English.objects.get(word=request.POST['word'])
+            model.meaning=request.POST['mean']
+            model.example=request.POST['example']
+            model.type=request.POST['type']
+            model.save()
+            return JsonResponse({"mean":model.meaning,"example":model.example,"type":model.type},status=200)
+        else:
+            return JsonResponse({"error":"not found"},status=400)
     return JsonResponse({"error":"not found"},status=400)
 def show_mean(request):
     if request.is_ajax and request.method=="GET":
@@ -95,5 +99,14 @@ def show_mean(request):
         return JsonResponse({"mean":obj.meaning,"example":obj.example,"type":obj.type},status=200)
     return JsonResponse({"error":"not found"},status=400)
 
+def search_word(request):
+    if request.is_ajax and request.method=="GET":
+        search_word=request.GET.get("search_word",None)
+        if English.objects.filter(word=search_word).exists():
+            data=English.objects.get(word=search_word)
+            return JsonResponse({'mes':'Have word','mean':data.meaning,'example':data.example,'type':data.type,'word':data.word},status=200) 
+        else:
+            return JsonResponse({},status=400)
+    return JsonResponse({},status=400)
 
 # Create your views here.
