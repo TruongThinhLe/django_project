@@ -33,10 +33,11 @@ def english(request):
                         pass
                     return redirect('/english') 
     current_week=date.today().isocalendar()[1]
-    words=English.objects.filter(pub_date__week=current_week)
+    words=English.objects.filter(pub_date__week=current_week).order_by('-pub_date','-id')
     words_ques=list(English.objects.all())
-    questions=random.sample(words_ques,int(len(words_ques)*2/3))
-    context={'words':words,'form':form,'form_mean':form_mean,'questions':questions}
+    lenght=len(words_ques)
+    questions=random.sample(words_ques,int(lenght*2/3))
+    context={'words':words,'form':form,'form_mean':form_mean,'questions':questions,'lenght':lenght}
     return render(request,'english.html',context)
 
 def plan(request):
