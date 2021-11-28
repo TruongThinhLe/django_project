@@ -130,11 +130,13 @@
     height: 500px;
 }
 .quiz>ul{
+    width: 85%;
     position: absolute;
     display: flex;
     flex-wrap: wrap;
     justify-items: center;
     align-items:center ;
+
 }
 .quiz>ul>li{
     background-color: #c2fbd7;
@@ -166,6 +168,7 @@
     .frame_eng{
         display: flex;
         flex-direction: column;
+        overflow-y: scroll;
     }
     .words{
         height: auto;

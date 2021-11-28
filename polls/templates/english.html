@@ -86,9 +86,9 @@
 		$(".button_word").click(function(){
 			var word=$(this).html()
 			$("#word").text(word)
-			$("#GD").attr("href","https://translate.google.com/?hl=vi&sl=auto&tl=vi&text="+$(this).html()+"&op=translate");
-			$("#CD").attr("href","https://dictionary.cambridge.org/dictionary/english-vietnamese/"+$(this).html());
-			$("#OD").attr("href","https://oxfordlearnersdictionaries.com/definition/english/"+$(this).html());
+			$("#GD").attr("href","https://translate.google.com/?hl=vi&sl=auto&tl=vi&text="+$('#word').text()+"&op=translate");
+			$("#CD").attr("href","https://dictionary.cambridge.org/dictionary/english-vietnamese/"+$('#word').text());
+			$("#OD").attr("href","https://oxfordlearnersdictionaries.com/definition/english/"+$('#word').text());
 			$.ajax({
 				type:'GET',
 				url:"{%url 'polls:show_mean'%}",
@@ -116,6 +116,9 @@
 				$("#mean").find("span").html(response["mean"]);
 				$("#example").find("span").html(response["example"]);
 				$("#type").find("span").html(response["type"]);
+				$("#GD").attr("href","https://translate.google.com/?hl=vi&sl=auto&tl=vi&text="+$('#word').text()+"&op=translate");
+				$("#CD").attr("href","https://dictionary.cambridge.org/dictionary/english-vietnamese/"+$('#word').text());
+				$("#OD").attr("href","https://oxfordlearnersdictionaries.com/definition/english/"+$('#word').text());
 			alert(response["mes"]);
 			})
 			.fail(function(response){
