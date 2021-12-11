@@ -36,8 +36,19 @@ def english(request):
     words=English.objects.filter(pub_date__week=current_week).order_by('-pub_date','-id')
     words_ques=list(English.objects.all())
     lenght=len(words_ques)
-    questions=random.sample(words_ques,int(lenght*2/3))
-    context={'words':words,'form':form,'form_mean':form_mean,'questions':questions,'lenght':lenght}
+    if lenght>50 :
+        questions=random.sample(words_ques,50)
+    else :
+        questions=random.sample(words_ques,int(lenght))
+    if lenght>50 :
+        example_ques=random.sample(words_ques,50)
+        for i in range(0,len(example_ques)):
+            example_ques[i].example=example_ques[i].example.replace(example_ques[i].word,"___")
+    else :
+        example_ques=random.sample(words_ques,int(lenght))
+        for i in range(0,len(example_ques)):
+            example_ques[i].example=example_ques[i].example.replace(example_ques[i].word,"___")
+    context={'words':words,'form':form,'form_mean':form_mean,'questions':questions,'lenght':lenght,'example_ques':example_ques}
     return render(request,'english.html',context)
 
 def plan(request):

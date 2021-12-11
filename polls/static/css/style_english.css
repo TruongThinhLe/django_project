@@ -136,6 +136,8 @@
     flex-wrap: wrap;
     justify-items: center;
     align-items:center ;
+    overflow-y:scroll;
+    height:500px;
 
 }
 .quiz>ul>li{
@@ -146,7 +148,7 @@
     color: green;
     cursor: pointer;
     font-size: 4vh;
-    height: 50px;
+    height: auto;
     padding: 0 25px;
     transition: all 200ms;
     margin-bottom: 10px;

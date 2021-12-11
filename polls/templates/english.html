@@ -70,12 +70,23 @@
 			<ul>
 			 {%for question in questions %}
 				<li class="quiz_ques" id="word{{question.id}}" data-id="{{question.id}}">
-					{{question.meaning}} <span style="display:none" >  {{question.word}}</span>
+					{{question.meaning}} - ({{question.type}})<span style="display:none" >{{question.word}}</span>
 				</li>
 			{%endfor%}
 			</ul>
 		 </div>
 	 </div>
+	 <div class="frame_eng">
+		<div class="quiz">
+		   <ul>
+			{%for example_ques in example_ques %}
+			   <li class="example_ques" id="word{{example_ques.id}}" data-id="{{example_ques.id}}">
+				   {{example_ques.example}} - ({{example_ques.type}})<span style="display:none" >{{example_ques.word}}</span>
+			   </li>
+		   {%endfor%}
+		   </ul>
+		</div>
+	</div>
 	<div class="info">
 		Word translated: {{lenght}}
 	</div>
@@ -103,10 +114,48 @@
 				}
 			});
 			});
+
 		$(".quiz_ques").click(function(){
 			var id=$(this).attr("data-id");
-			$("#word"+id).children("span").attr("style","display:absolute;color:pink")
+			var data="search_word="+$(this).children("span").text();
+			$(this).children("span").attr("style","display:absolute;color:pink");
+			$.get("{%url 'polls:search_word'%}",data)
+			.done(function(response){
+				$("#word").text(response["word"])
+				$("#mean").find("span").html(response["mean"]);
+				$("#example").find("span").html(response["example"]);
+				$("#type").find("span").html(response["type"]);
+				$("#GD").attr("href","https://translate.google.com/?hl=vi&sl=auto&tl=vi&text="+$('#word').text()+"&op=translate");
+				$("#CD").attr("href","https://dictionary.cambridge.org/dictionary/english-vietnamese/"+$('#word').text());
+				$("#OD").attr("href","https://oxfordlearnersdictionaries.com/definition/english/"+$('#word').text());
+			})
+			.fail(function(response){
+				alert("Not found")
+			})
+			;
 		});
+
+		$(".example_ques").click(function(){
+			var id=$(this).attr("data-id");
+			var data="search_word="+$(this).children("span").text();
+			$(this).children("span").attr("style","display:absolute;color:pink");
+			$.get("{%url 'polls:search_word'%}",data)
+			.done(function(response){
+				$("#word").text(response["word"])
+				$("#mean").find("span").html(response["mean"]);
+				$("#example").find("span").html(response["example"]);
+				$("#type").find("span").html(response["type"]);
+				$("#GD").attr("href","https://translate.google.com/?hl=vi&sl=auto&tl=vi&text="+$('#word').text()+"&op=translate");
+				$("#CD").attr("href","https://dictionary.cambridge.org/dictionary/english-vietnamese/"+$('#word').text());
+				$("#OD").attr("href","https://oxfordlearnersdictionaries.com/definition/english/"+$('#word').text());
+			})
+			.fail(function(response){
+				alert("Not found")
+			})
+			;
+
+		});
+
 		$("#form_search").submit(function(e){
 			e.preventDefault();
 			var serData=$(this).serialize();
