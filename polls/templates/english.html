@@ -79,9 +79,9 @@
 	 <div class="frame_eng">
 		<div class="quiz">
 		   <ul>
-			{%for example_ques in example_ques %}
-			   <li class="example_ques" id="word{{example_ques.id}}" data-id="{{example_ques.id}}">
-				   {{example_ques.example}} - ({{example_ques.type}})<span style="display:none" >{{example_ques.word}}</span>
+			{%for question in questions %}
+			   <li class="example_ques" id="word{{question.id}}" data-id="{{question.id}}">
+				   {{question.example}} - ({{question.type}})<span style="display:none" >{{question.word}}</span>
 			   </li>
 		   {%endfor%}
 		   </ul>

@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" type="text/css" href="{% static 'css/style.css'%}">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@600&family=Oswald&display=swap>"
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@600&family=Oswald&display=swap>">
 </head>
 <body>
  <div class="home">
@@ -26,4 +26,49 @@
 		<a href="{% url 'polls:english'%}" target="_self">English </a>
 	</div>
  </div>
+
+ <div class="">
+	 <div class="Todo">Daily do</div>
+	<form action="{%url 'polls:check_done'%}" method="GET">
+	<ul class="Tasks">
+	{%for do in todo %}
+	{%if do.Check_done is True %}
+		<li><label for="{{do.Task_todo}}">{{do.Task_todo}}</label><span ><input type="checkbox"  checked name="{{do.Task_todo}}"></span></li>
+		{%else%}
+		<li><label for="{{do.Task_todo}}">{{do.Task_todo}}</label><span ><input type="checkbox"  name="{{do.Task_todo}}"></span></li>
+	{%endif%}
+	{%endfor%}
+	</ul>
+	<input type="submit" value="Submit" >
+	</form>
+</div>
+
+	<form action="" method="POST" class="form">
+		<label for="new_word">New </label>
+		{%csrf_token%}
+		{{form}}
+		<input type="radio" value="Today" name="Today" id="td">
+		<label for="td">Today</label>
+		<input type="radio" value="Tommoror" name="Tommoror" id="tm">
+		<label for="tm">Tommoror</label>
+		<input type="submit" value="Enter"  >
+	</form>	
+
+<div class="">
+	<div class="Todo">Next day</div>
+	{%for do in tomr_do %}
+	<ul class="Tasks">
+		<li><label>{{do.Task_todo}}</label></li>
+	</ul>
+	{%endfor%}
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	{%block javascript%}
+<script>
+	$(document).ready(function(){
+		
+	})
+</script>
+	{%endblock javascript%}
 </body>
+</html>

@@ -1,4 +1,5 @@
 from django import forms
+from django.db.models import fields
 from .models import *
 
 class Word_form(forms.ModelForm):
@@ -19,3 +20,10 @@ class Plan_form(forms.ModelForm):
         model=Plan
         fields=['plan','date_end','date_start']
         widgets={'date_end':DateInput(),'date_start':DateInput()}
+
+class Todo_form(forms.ModelForm):
+    class Meta:
+        model=List_todo
+        fields=['Task_todo','Time_todo']
+        widgets={'Task_todo':forms.TextInput(attrs={'class':"form_task"})}
+        

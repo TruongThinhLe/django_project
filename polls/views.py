@@ -7,8 +7,46 @@ from datetime import datetime,timedelta,date
 import random
 from django.contrib import messages
 from .auto import *
+
 def index(request):
-	return render(request,'index.html')
+    current=date.today()
+    refresh=List_todo.objects.all()
+    for ref in refresh:
+        if (ref.Day_todo.isocalendar()[1] != current.isocalendar()[1]):
+            ref.delete()
+    #=Plan.objects.filter(pub_date__week=current).order_by('-pub_date','-id')
+    plans=Plan.objects.all()
+    for plan in plans:
+        if (plan.date_end>=current) and (plan.date_start<current):
+            if(List_todo.objects.filter(Task_todo=plan.plan).exists()):
+                todo_s=List_todo.objects.filter(Task_todo=plan.plan)
+                todo_s.Day_todo=current
+            else :
+                todo_s=List_todo(Task_todo=plan.plan,Day_todo=current)
+                todo_s.save()
+    form=Todo_form()
+    if request.method=='POST':
+        if Todo_form(request.POST).is_valid():
+            post=request.POST.copy()
+            print(post)
+            if post["Today"]:
+                post["Day_todo"]=str(current)
+                post.pop("csrfmiddlewaretoken")
+                post.pop("Today")
+                List_todo.objects.create(**post.dict())
+                return redirect("/")
+            else:
+                post["Day_todo"]=str(current+timedelta(days=1))
+                post.pop("csrfmiddlewaretoken")
+                post.pop("Tommoror")
+                List_todo.objects.create(**post.dict())
+                return redirect("/")
+
+    todo_today=List_todo.objects.filter(Day_todo=current)
+    todo_tommorrow=List_todo.objects.filter(Day_todo=current+timedelta(days=1))
+    context={'todo':todo_today,'form':form,'tomr_do':todo_tommorrow}
+    return render(request,'index.html',context)
+
 def english(request):
     form=Word_form()
     form_mean=Form_mean()
@@ -32,23 +70,19 @@ def english(request):
                     except IndexError:
                         pass
                     return redirect('/english') 
-    current_week=date.today().isocalendar()[1]
-    words=English.objects.filter(pub_date__week=current_week).order_by('-pub_date','-id')
+    current=date.today().isocalendar()[1]
+    words=English.objects.filter(pub_date__week=current).order_by('-pub_date','-id')
     words_ques=list(English.objects.all())
     lenght=len(words_ques)
-    if lenght>50 :
-        questions=random.sample(words_ques,50)
+    if lenght>20 :
+        questions=random.sample(words_ques,20)
+        for i in range(0,len(questions)):
+            questions[i].example=questions[i].example.replace(questions[i].word,"___")
     else :
         questions=random.sample(words_ques,int(lenght))
-    if lenght>50 :
-        example_ques=random.sample(words_ques,50)
-        for i in range(0,len(example_ques)):
-            example_ques[i].example=example_ques[i].example.replace(example_ques[i].word,"___")
-    else :
-        example_ques=random.sample(words_ques,int(lenght))
-        for i in range(0,len(example_ques)):
-            example_ques[i].example=example_ques[i].example.replace(example_ques[i].word,"___")
-    context={'words':words,'form':form,'form_mean':form_mean,'questions':questions,'lenght':lenght,'example_ques':example_ques}
+        for i in range(0,len(questions)):
+            questions[i].example=questions[i].example.replace(questions[i].word,"___")
+    context={'words':words,'form':form,'form_mean':form_mean,'questions':questions,'lenght':lenght}
     return render(request,'english.html',context)
 
 def plan(request):
@@ -120,5 +154,22 @@ def search_word(request):
         else:
             return JsonResponse({},status=400)
     return JsonResponse({},status=400)
-
+def check_done(request):
+    if request.method=="GET":
+        task=request.GET.copy()
+        print(list(task.keys()))
+        listdo=List_todo.objects.all()
+        for lis in listdo:
+            for tas in list(task.keys()):
+                print(tas)
+                print(lis.Task_todo+'.')
+                if lis.Task_todo==tas:
+                    lis.Check_done=True
+                    lis.save()
+                    break
+                else:
+                    lis.Check_done=False
+                    lis.save()
+        
+    return redirect('/')
 # Create your views here.
