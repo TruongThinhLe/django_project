@@ -1,6 +1,6 @@
 from django.db import models
 from django.db.models.deletion import CASCADE, SET_NULL
-from django.db.models.fields import BooleanField, DateField, IntegerField, TextField
+from django.db.models.fields import BooleanField, DateField, DecimalField, IntegerField, TextField
 from django.db.models.fields.related import ForeignKey
 	
 class English(models.Model):
@@ -17,12 +17,13 @@ class Plan(models.Model):
     date_end=models.DateField()
     date_start=models.DateField()
     status=models.IntegerField(null=True)
+    time_todo=models.DecimalField(max_digits=10,decimal_places=2)
     
 class List_todo(models.Model):
     Day_todo=DateField(null=True)
     Task_todo=TextField(max_length=50)   
     Check_done=BooleanField(default=False)
-    Time_todo=IntegerField(null=True)
+    Time_todo=DecimalField(null=True,max_digits=10,decimal_places=2)
     def __str__(self):
         return self.Task_todo
 

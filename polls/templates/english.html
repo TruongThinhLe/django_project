@@ -59,7 +59,7 @@
 			  {%else %}
 			  <button class="button_word" id="{{word.id}}" style="background-color: rgb(233, 138, 109);" >{{word}}</button>
 			  {%endif%}
-			  <a class="delete_word" href="{%url 'polls:delete-word' word.id%}" >x<a>
+			  <a class="delete_word" href="{%url 'polls:delete-word' word.id%}" >x</a>
 			</li>
 		{%endfor%}
 	    </ul>

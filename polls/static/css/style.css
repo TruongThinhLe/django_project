@@ -56,9 +56,9 @@ body{
 }
 .card > a {
     display:block;
-    width: 500px;
+    width: 50vmin;
     color:rgb(58, 55, 54);
-    font-size: 9vmin;
+    font-size: 3vmax;
     margin:10px;
     padding:40px;
     text-align: center;
@@ -80,18 +80,19 @@ body{
     text-align: center;
     justify-content: center;
     background-color: #9D9D9D;
+    font-size: 2vmax;
 }
 .Todo{
     color: rgb(255, 242, 182);
     background-color: rgb(14, 99, 110);
     width:100%;
     text-align:center;
-    font-size:4vmin;
+    font-size:3vmax;
     font-weight: bolder;
 }
 label{
     color:rgb(23, 72, 92);
-    font-size:2vw;
+    font-size:2vmax;
     font-weight: 50;
     
 }
@@ -101,7 +102,7 @@ input[type="checkbox"]{
 }
 .Tasks>li>span{
     position: absolute;
-    right:20px;
+    right:50px;
 }
 .Tasks>li{
     list-style-type:armenian;
@@ -119,7 +120,15 @@ input[type="submit"]{
     border-radius: 15%;
     margin-top:10px;
 }
-
+.delete_task{
+    text-decoration: none;
+    display: inline;
+    position: absolute;
+    right:10px;
+    font-size: 3vh;
+    color:black;
+    margin-left: 4px;
+}
 @media screen and (max-width:600px){
     .container{
         width: 100%;

@@ -12,4 +12,6 @@ urlpatterns=[path('',views.index,name="index")
 ,path('delete_word/<word_id>/',views.delete_word,name='delete-word')
 ,path('search_word',views.search_word,name="search_word")
 ,path('check_done',views.check_done,name="check_done")
+,path('delete_task/<do_id>',views.delete_task,name='delete_task')
+,
 ]

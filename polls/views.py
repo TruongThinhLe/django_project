@@ -22,29 +22,35 @@ def index(request):
                 todo_s=List_todo.objects.filter(Task_todo=plan.plan)
                 todo_s.Day_todo=current
             else :
-                todo_s=List_todo(Task_todo=plan.plan,Day_todo=current)
+                todo_s=List_todo(Task_todo=plan.plan,Day_todo=current,Time_todo=plan.time_todo)
                 todo_s.save()
     form=Todo_form()
     if request.method=='POST':
         if Todo_form(request.POST).is_valid():
             post=request.POST.copy()
             print(post)
-            if post["Today"]:
-                post["Day_todo"]=str(current)
+            if post["daydo"]:
                 post.pop("csrfmiddlewaretoken")
-                post.pop("Today")
-                List_todo.objects.create(**post.dict())
-                return redirect("/")
-            else:
-                post["Day_todo"]=str(current+timedelta(days=1))
-                post.pop("csrfmiddlewaretoken")
-                post.pop("Tommoror")
-                List_todo.objects.create(**post.dict())
-                return redirect("/")
+                if post["daydo"]=="Today":
+                    post["Day_todo"]=str(current)
+                    post.pop("daydo")
+                    List_todo.objects.create(**post.dict())
+                    return redirect("/")
+                else:
+                    post["Day_todo"]=str(current+timedelta(days=1))
+                    post.pop("daydo")
+                    List_todo.objects.create(**post.dict())
+                    return redirect("/")
 
     todo_today=List_todo.objects.filter(Day_todo=current)
+    count_today=0
+    for do in todo_today:
+        count_today=count_today+do.Time_todo
     todo_tommorrow=List_todo.objects.filter(Day_todo=current+timedelta(days=1))
-    context={'todo':todo_today,'form':form,'tomr_do':todo_tommorrow}
+    count_tommor=0
+    for do in todo_tommorrow:
+        count_tommor=count_tommor+do.Time_todo
+    context={'todo':todo_today,'form':form,'tomr_do':todo_tommorrow,'count_today':count_today,'count_tommor':count_tommor}
     return render(request,'index.html',context)
 
 def english(request):
@@ -77,11 +83,17 @@ def english(request):
     if lenght>20 :
         questions=random.sample(words_ques,20)
         for i in range(0,len(questions)):
-            questions[i].example=questions[i].example.replace(questions[i].word,"___")
+            if questions[i].example==None:
+                continue
+            else:
+                questions[i].example=questions[i].example.replace(questions[i].word,"___")
     else :
         questions=random.sample(words_ques,int(lenght))
         for i in range(0,len(questions)):
-            questions[i].example=questions[i].example.replace(questions[i].word,"___")
+            if questions[i].example==None:
+                continue
+            else:
+                questions[i].example=questions[i].example.replace(questions[i].word,"___")
     context={'words':words,'form':form,'form_mean':form_mean,'questions':questions,'lenght':lenght}
     return render(request,'english.html',context)
 
@@ -171,5 +183,10 @@ def check_done(request):
                     lis.Check_done=False
                     lis.save()
         
+    return redirect('/')
+
+def delete_task(request,do_id):
+    task=List_todo.objects.get(pk=do_id)
+    task.delete()
     return redirect('/')
 # Create your views here.

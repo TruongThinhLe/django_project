@@ -33,13 +33,13 @@
 	<ul class="Tasks">
 	{%for do in todo %}
 	{%if do.Check_done is True %}
-		<li><label for="{{do.Task_todo}}">{{do.Task_todo}}</label><span ><input type="checkbox"  checked name="{{do.Task_todo}}"></span></li>
+		<li><label for="{{do.Task_todo}}">{{do.Task_todo}} <span style="font-size:2vh;">{{do.Time_todo}}(h)</span></label><span ><input type="checkbox"  checked name="{{do.Task_todo}}"></span><a class="delete_task" href="{%url 'polls:delete_task' do.id%}" >x</a></li>
 		{%else%}
-		<li><label for="{{do.Task_todo}}">{{do.Task_todo}}</label><span ><input type="checkbox"  name="{{do.Task_todo}}"></span></li>
+		<li><label for="{{do.Task_todo}}">{{do.Task_todo}} <span style="font-size:2vh;">{{do.Time_todo}}(h)</span></label><span ><input type="checkbox"  name="{{do.Task_todo}}"></span><a class="delete_task" href="{%url 'polls:delete_task' do.id %}" >x</a></li>
 	{%endif%}
 	{%endfor%}
 	</ul>
-	<input type="submit" value="Submit" >
+	<input type="submit" value="Submit" ><span>  Total hours:{{count_today}} </span>
 	</form>
 </div>
 
@@ -47,9 +47,9 @@
 		<label for="new_word">New </label>
 		{%csrf_token%}
 		{{form}}
-		<input type="radio" value="Today" name="Today" id="td">
+		<input type="radio" value="Today" name="daydo" id="td">
 		<label for="td">Today</label>
-		<input type="radio" value="Tommoror" name="Tommoror" id="tm">
+		<input type="radio" value="Tommoror" name="daydo" id="tm">
 		<label for="tm">Tommoror</label>
 		<input type="submit" value="Enter"  >
 	</form>	
@@ -58,8 +58,9 @@
 	<div class="Todo">Next day</div>
 	{%for do in tomr_do %}
 	<ul class="Tasks">
-		<li><label>{{do.Task_todo}}</label></li>
+		<li><label>{{do.Task_todo}}</label><a class="delete_task" href="{%url 'polls:delete_task' do.id %}" >x</a></li>
 	</ul>
+	<span>Total hours:{{count_tommor}} </span>
 	{%endfor%}
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
