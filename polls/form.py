@@ -1,6 +1,10 @@
 from django import forms
 from django.db.models import fields
+from django.forms import widgets
 from .models import *
+from django.contrib.auth import get_user_model
+
+User=get_user_model
 
 class Word_form(forms.ModelForm):
     class Meta:
@@ -26,4 +30,8 @@ class Todo_form(forms.ModelForm):
         model=List_todo
         fields=['Task_todo','Time_todo']
         widgets={'Task_todo':forms.TextInput(attrs={'class':"form_task"})}
-        
+
+class LoginForm(forms.Form):
+    username=forms.CharField()
+    password=forms.CharField(widget=forms.PasswordInput(attrs={"class":"loginform"}))
+    

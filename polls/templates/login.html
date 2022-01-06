@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+    {%load static %}
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css'%}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@600&family=Oswald&display=swap>">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style_login.css'%}">
+</head>
+<body>
+    <form method='POST' class="formlogin">
+        {%csrf_token%}
+        {{form}}
+        <input type="submit" name="submit" value="login">
+        <input type="hidden" name="next" value="next">
+    </form>
+</body>
+</html>

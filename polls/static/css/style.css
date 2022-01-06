@@ -129,6 +129,13 @@ input[type="submit"]{
     color:black;
     margin-left: 4px;
 }
+#Logout{
+    margin-top: 20px;
+    font-size: 2vh;
+    font-weight: bolder;
+    position: absolute;
+    right: 0px;
+}
 @media screen and (max-width:600px){
     .container{
         width: 100%;

@@ -6,8 +6,30 @@ from .form import *
 from datetime import datetime,timedelta,date
 import random
 from django.contrib import messages
+from django.contrib.auth import authenticate, login as dj_login ,logout as dj_logout
+from django.contrib.auth.decorators import login_required
 from .auto import *
 
+
+def logout(request):
+    dj_logout(request)
+    return redirect("/")
+
+def login(request):
+    form=LoginForm(request.POST)
+    if form.is_valid():
+        username=request.POST["username"]
+        password=request.POST["password"]
+        user=authenticate(request,username=username,password=password)
+        if user != None:
+            dj_login(request,user)
+            return redirect("index/")
+        else:
+            return HttpResponse("Wrong pass or user")
+    context={'form':form}
+    return render(request,'login.html',context)
+
+@login_required
 def index(request):
     current=date.today()
     refresh=List_todo.objects.all()
@@ -35,12 +57,12 @@ def index(request):
                     post["Day_todo"]=str(current)
                     post.pop("daydo")
                     List_todo.objects.create(**post.dict())
-                    return redirect("/")
+                    return redirect("/index")
                 else:
                     post["Day_todo"]=str(current+timedelta(days=1))
                     post.pop("daydo")
                     List_todo.objects.create(**post.dict())
-                    return redirect("/")
+                    return redirect("/index")
 
     todo_today=List_todo.objects.filter(Day_todo=current)
     count_today=0
@@ -53,6 +75,7 @@ def index(request):
     context={'todo':todo_today,'form':form,'tomr_do':todo_tommorrow,'count_today':count_today,'count_tommor':count_tommor}
     return render(request,'index.html',context)
 
+@login_required
 def english(request):
     form=Word_form()
     form_mean=Form_mean()
@@ -97,6 +120,7 @@ def english(request):
     context={'words':words,'form':form,'form_mean':form_mean,'questions':questions,'lenght':lenght}
     return render(request,'english.html',context)
 
+@login_required
 def plan(request):
     form=Plan_form()
     if request.method=='POST':
@@ -104,24 +128,26 @@ def plan(request):
         form=Plan_form(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('/plan')
-            
+            return redirect('/plan')        
     plans=Plan.objects.all()
     for plan in plans :
         plan.status=get_status(plan.date_end,plan.date_start)
         plan.save()
-    
     context={'form':form,'plans':plans}
     return render(request,'plan.html',context)
 
+@login_required
 def delete_plan(request,plan_id):
     plan=Plan.objects.get(pk=plan_id)
     plan.delete()
     return redirect('/plan')
+
+@login_required
 def delete_word(request,word_id):
     word=English.objects.get(pk=word_id)
     word.delete()
     return redirect('/english')
+
 
 def get_status(date_end,date_start):
     now=datetime.date(datetime.now())
@@ -132,11 +158,15 @@ def get_status(date_end,date_start):
         return (date_end-now).days
     else :
         return None
+
+@login_required
 def change_bar(request):
     if request.is_ajax and request.method=="GET":
         len_plan=len(Plan.objects.all())
         return JsonResponse({"lenght":len_plan},status=200)
     return JsonResponse({},status=400)
+
+@login_required
 def update_mean(request):
     if request.is_ajax and request.method=="POST":
         print(request.POST)
@@ -150,6 +180,8 @@ def update_mean(request):
         else:
             return JsonResponse({"error":"not found"},status=400)
     return JsonResponse({"error":"not found"},status=400)
+
+@login_required
 def show_mean(request):
     if request.is_ajax and request.method=="GET":
         word=request.GET.get("word",None)
@@ -157,6 +189,7 @@ def show_mean(request):
         return JsonResponse({"mean":obj.meaning,"example":obj.example,"type":obj.type},status=200)
     return JsonResponse({"error":"not found"},status=400)
 
+@login_required
 def search_word(request):
     if request.is_ajax and request.method=="GET":
         search_word=request.GET.get("search_word",None)
@@ -166,6 +199,8 @@ def search_word(request):
         else:
             return JsonResponse({},status=400)
     return JsonResponse({},status=400)
+
+@login_required
 def check_done(request):
     if request.method=="GET":
         task=request.GET.copy()
@@ -183,10 +218,11 @@ def check_done(request):
                     lis.Check_done=False
                     lis.save()
         
-    return redirect('/')
+    return redirect('/index')
 
+@login_required
 def delete_task(request,do_id):
     task=List_todo.objects.get(pk=do_id)
     task.delete()
-    return redirect('/')
+    return redirect('/index')
 # Create your views here.
