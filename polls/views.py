@@ -39,10 +39,12 @@ def index(request):
     #=Plan.objects.filter(pub_date__week=current).order_by('-pub_date','-id')
     plans=Plan.objects.all()
     for plan in plans:
-        if (plan.date_end>=current) and (plan.date_start<current):
-            if(List_todo.objects.filter(Task_todo=plan.plan).exists()):
-                todo_s=List_todo.objects.filter(Task_todo=plan.plan)
-                todo_s.Day_todo=current
+        if (plan.date_end>=current) and (plan.date_start<=current):
+            if(List_todo.objects.filter(Task_todo=plan.plan,Day_todo=current).exists()) :
+                #todo_s=List_todo.objects.get(Task_todo=plan.plan)
+                #todo_s.Day_todo=current
+                #todo_s.save()
+                pass
             else :
                 todo_s=List_todo(Task_todo=plan.plan,Day_todo=current,Time_todo=plan.time_todo)
                 todo_s.save()
@@ -79,6 +81,8 @@ def index(request):
 def english(request):
     form=Word_form()
     form_mean=Form_mean()
+    form_num=Num_form()
+    number_quiz=10
     if request.method=='POST':
         if 'submit_newword' in request.POST:
             print(request.POST)
@@ -99,12 +103,14 @@ def english(request):
                     except IndexError:
                         pass
                     return redirect('/english') 
+        elif 'OK' in request.POST:
+            number_quiz=int(request.POST['number_quiz'])
     current=date.today().isocalendar()[1]
     words=English.objects.filter(pub_date__week=current).order_by('-pub_date','-id')
     words_ques=list(English.objects.all())
     lenght=len(words_ques)
-    if lenght>20 :
-        questions=random.sample(words_ques,20)
+    if lenght>number_quiz :
+        questions=random.sample(words_ques,number_quiz)
         for i in range(0,len(questions)):
             if questions[i].example==None:
                 continue
@@ -117,7 +123,7 @@ def english(request):
                 continue
             else:
                 questions[i].example=questions[i].example.replace(questions[i].word,"___")
-    context={'words':words,'form':form,'form_mean':form_mean,'questions':questions,'lenght':lenght}
+    context={'words':words,'form':form,'form_mean':form_mean,'questions':questions,'lenght':lenght,'form_num':form_num,'number_quiz':number_quiz}
     return render(request,'english.html',context)
 
 @login_required
@@ -176,7 +182,7 @@ def update_mean(request):
             model.example=request.POST['example']
             model.type=request.POST['type']
             model.save()
-            return JsonResponse({"mean":model.meaning,"example":model.example,"type":model.type},status=200)
+            return JsonResponse({"mean":model.meaning,"example":model.example,"type":model.type,"id":model.id},status=200)
         else:
             return JsonResponse({"error":"not found"},status=400)
     return JsonResponse({"error":"not found"},status=400)
@@ -186,7 +192,7 @@ def show_mean(request):
     if request.is_ajax and request.method=="GET":
         word=request.GET.get("word",None)
         obj=English.objects.get(word=word)
-        return JsonResponse({"mean":obj.meaning,"example":obj.example,"type":obj.type},status=200)
+        return JsonResponse({"mean":obj.meaning,"example":obj.example,"type":obj.type,'id':obj.id},status=200)
     return JsonResponse({"error":"not found"},status=400)
 
 @login_required
@@ -195,7 +201,7 @@ def search_word(request):
         search_word=request.GET.get("search_word",None)
         if English.objects.filter(word=search_word).exists():
             data=English.objects.get(word=search_word)
-            return JsonResponse({'mes':'Have word','mean':data.meaning,'example':data.example,'type':data.type,'word':data.word},status=200) 
+            return JsonResponse({'mes':'Have word','mean':data.meaning,'example':data.example,'type':data.type,'word':data.word,'id':data.id},status=200) 
         else:
             return JsonResponse({},status=400)
     return JsonResponse({},status=400)

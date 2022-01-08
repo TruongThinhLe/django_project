@@ -11,6 +11,9 @@ class Word_form(forms.ModelForm):
         model =English
         fields=['word']
 
+class Num_form(forms.Form):
+    number_quiz=forms.IntegerField(max_value=50)
+
 class Form_mean(forms.Form):
     mean=forms.CharField(label="Mean",max_length=50)
     example=forms.CharField(label="Example",max_length=100)

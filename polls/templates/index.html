@@ -60,8 +60,8 @@
 	<ul class="Tasks">
 		<li><label>{{do.Task_todo}}</label><a class="delete_task" href="{%url 'polls:delete_task' do.id %}" >x</a></li>
 	</ul>
-	<span>Total hours:{{count_tommor}} </span>
 	{%endfor%}
+	<span>Total hours:{{count_tommor}} </span>
 </div>
 <a href="{%url 'polls:logout' %}" id="Logout">Log Out</a>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>

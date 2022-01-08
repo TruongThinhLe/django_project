@@ -10,11 +10,12 @@
     flex-direction: row;
     box-shadow: 0px 0px 10px rgb(35, 170, 194);
     margin-bottom: 50px;
+    margin-top:20px;
 }
 
 .content{
     width:80%;
-    font-size:5vh;
+    font-size:4vmin;
     margin:10px;
     padding:10px;
     border-radius: 5px;
@@ -166,6 +167,18 @@
 }
 #type>strong{
     color:rgba(0, 0, 255, 0.76);
+}
+.num_quiz{
+    align-content: center;
+    justify-content: center;
+}
+.frame_num{
+    width: 100%;
+    background-color: aquamarine;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
 }
 @media screen and (max-width:800px){
     .frame_eng{

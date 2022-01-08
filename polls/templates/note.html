@@ -1,0 +1,28 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	{%load static%}
+	{%load custom_tags%}
+    <link rel="stylesheet" href="{%static 'css/style.css'%}">
+    <link rel="stylesheet" href="{%static 'css/style_plan.css'%}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@600&family=Oswald&display=swap">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+</head>
+<body>
+    <div class="home">
+        <a href="{% url 'polls:index'%}"><img src="{%static 'image/1.png'%}"></a>
+        <h1>Automatic Speed Effective</h1>
+     </div>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	{%block javascript %}
+	<script>
+		$(document).ready(function(){
+		});
+	</script>
+	{%endblock javascript%}
+</body>
+</html>
