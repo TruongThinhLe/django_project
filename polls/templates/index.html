@@ -4,6 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+
 <link rel="stylesheet" type="text/css" href="{% static 'css/style.css'%}">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@600&family=Oswald&display=swap>">
 </head>
@@ -63,6 +64,31 @@
 	{%endfor%}
 	<span>Total hours:{{count_tommor}} </span>
 </div>
+<div>
+	{%for task in re_task%}
+	
+	<table>
+		<tr>
+			<th>Task - {{task.day}}</th>
+			<th>Status</th>
+		</tr>
+		{%for intask in task.tasks%}
+		{%if intask.Check_done == True%}
+		<tr style="background-color: rgb(251, 251, 251);">
+			<td>{{intask.Task_todo}}</td>
+			<td>{{intask.Check_done}}</td>
+		</tr>
+		{%else%}
+		<tr style="background-color: rgb(194, 154, 154);">
+			<td>{{intask.Task_todo}}</td>
+			<td>{{intask.Check_done}}</td>
+		</tr>
+		{%endif%}
+		{%endfor%}
+	</table>
+	{%endfor%}
+</div>
+
 <a href="{%url 'polls:logout' %}" id="Logout">Log Out</a>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	{%block javascript%}

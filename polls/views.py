@@ -1,3 +1,4 @@
+from typing import List
 from django.shortcuts import render,redirect
 from django.core.exceptions import MultipleObjectsReturned
 from django.http import HttpResponse,JsonResponse
@@ -74,7 +75,16 @@ def index(request):
     count_tommor=0
     for do in todo_tommorrow:
         count_tommor=count_tommor+do.Time_todo
-    context={'todo':todo_today,'form':form,'tomr_do':todo_tommorrow,'count_today':count_today,'count_tommor':count_tommor}
+
+    monday=current-timedelta(days=current.isoweekday()-1)
+    list_day=[monday+timedelta(days=x) for x in range(0,7)]        
+    re_task=[]
+    for day in list_day:
+        tas=Sub_do(day)
+        re_task.append(tas)
+    print(re_task)
+
+    context={'todo':todo_today,'form':form,'tomr_do':todo_tommorrow,'count_today':count_today,'count_tommor':count_tommor,'re_task':re_task}
     return render(request,'index.html',context)
 
 @login_required
@@ -208,10 +218,11 @@ def search_word(request):
 
 @login_required
 def check_done(request):
+    current=date.today()
     if request.method=="GET":
         task=request.GET.copy()
         print(list(task.keys()))
-        listdo=List_todo.objects.all()
+        listdo=List_todo.objects.filter(Day_todo=current)
         for lis in listdo:
             for tas in list(task.keys()):
                 print(tas)

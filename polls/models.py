@@ -27,5 +27,11 @@ class List_todo(models.Model):
     def __str__(self):
         return self.Task_todo
 
-
+class Sub_do():
+    def __init__(self,day):
+        self.tasks=list(List_todo.objects.filter(Day_todo=day))
+        self.day=day.strftime('%A')
+    def __str__(self):
+        return self.day
+    
 # Create your models here
