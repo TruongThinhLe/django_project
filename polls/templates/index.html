@@ -21,10 +21,10 @@
 		<a href="{% url 'polls:plan'%}" target="_self">Plan </a>
 	</div>	
 	<div class="card">
-		<a href="{% url 'polls:english'%}" target="_self">English </a>
+		<a href="{% url 'polls:note'%}" target="_self">Note </a>
 	</div>
 	<div class="card">
-		<a href="{% url 'polls:english'%}" target="_self">English </a>
+		<a href="{% url 'polls:challenge'%}" target="_self">Challenge </a>
 	</div>
  </div>
 
@@ -75,12 +75,12 @@
 		{%for intask in task.tasks%}
 		{%if intask.Check_done == True%}
 		<tr style="background-color: rgb(251, 251, 251);">
-			<td>{{intask.Task_todo}}</td>
+			<td>{{intask.Task_todo}}-({{intask.Time_todo}})</td>
 			<td>{{intask.Check_done}}</td>
 		</tr>
 		{%else%}
 		<tr style="background-color: rgb(194, 154, 154);">
-			<td>{{intask.Task_todo}}</td>
+			<td>{{intask.Task_todo}}-({{intask.Time_todo}})</td>
 			<td>{{intask.Check_done}}</td>
 		</tr>
 		{%endif%}

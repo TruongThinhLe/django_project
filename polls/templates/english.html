@@ -88,7 +88,7 @@
 	 <div class="frame_eng">
 		<div class="quiz">
 		   <ul>
-			{%for question in questions %}
+			{%for question in questions_ques %}
 			   <li class="example_ques" id="word{{question.id}}" data-id="{{question.id}}">
 				   {{question.example}} - ({{question.type}})<span style="display:none" >{{question.word}}</span>
 			   </li>

@@ -133,7 +133,8 @@ def english(request):
                 continue
             else:
                 questions[i].example=questions[i].example.replace(questions[i].word,"___")
-    context={'words':words,'form':form,'form_mean':form_mean,'questions':questions,'lenght':lenght,'form_num':form_num,'number_quiz':number_quiz}
+    questions_ques=random.sample(questions,len(questions))
+    context={'words':words,'form':form,'form_mean':form_mean,'questions':questions,'questions_ques':questions_ques,'lenght':lenght,'form_num':form_num,'number_quiz':number_quiz}
     return render(request,'english.html',context)
 
 @login_required
@@ -151,6 +152,14 @@ def plan(request):
         plan.save()
     context={'form':form,'plans':plans}
     return render(request,'plan.html',context)
+
+@login_required
+def note(request):
+    return render(request,'note.html')
+
+@login_required
+def challenge(request):
+    return render(request,'challenge.html')
 
 @login_required
 def delete_plan(request,plan_id):

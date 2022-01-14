@@ -33,5 +33,17 @@ class Sub_do():
         self.day=day.strftime('%A')
     def __str__(self):
         return self.day
+
+class Note(models.Model):
+    Note=TextField()
+    Time_pub=DateField(auto_now_add=True)
+    def __str__(self):
+        return self.Note
+
+class Challenge(models.Model):
+    Challenge=TextField()
+    Time_pub=DateField(auto_now_add=True)
+    def __str__(self):
+        return self.Challenge
     
 # Create your models here
