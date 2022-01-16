@@ -155,11 +155,28 @@ def plan(request):
 
 @login_required
 def note(request):
-    return render(request,'note.html')
+    form=Note_Form()
+    if request.method=='POST':
+        print(request.POST)
+        form=Note_Form(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('/note')
+    note_data=Note.objects.all().order_by('-Time_pub','-id')
+    context={"form":form,"note_data":note_data}
+    return render(request,'note.html',context)
 
 @login_required
 def challenge(request):
-    return render(request,'challenge.html')
+    form=Challenge_form()
+    if request.method=='POST':
+        form=Challenge_form(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('/challenge')
+    challenge=Challenge.objects.all()
+    context={"form":form,'challenge':challenge}
+    return render(request,'challenge.html',context)
 
 @login_required
 def delete_plan(request,plan_id):
@@ -173,6 +190,17 @@ def delete_word(request,word_id):
     word.delete()
     return redirect('/english')
 
+@login_required
+def delete_note(request,note_id):
+    note=Note.objects.get(pk=note_id)
+    note.delete()
+    return redirect('/note')
+
+@login_required
+def delete_challenge(request,challenge_id):
+    challenge=Challenge.objects.get(pk=challenge_id)
+    challenge.delete()
+    return redirect('/challenge')
 
 def get_status(date_end,date_start):
     now=datetime.date(datetime.now())
@@ -243,8 +271,23 @@ def check_done(request):
                 else:
                     lis.Check_done=False
                     lis.save()
-        
     return redirect('/index')
+
+@login_required
+def update_challenge(request):
+    if request.method=="GET":
+        challenge=request.GET.copy()
+        lis_chag=Challenge.objects.all()
+        for lis in lis_chag:
+            for cha in list(challenge.keys()):
+                if lis.Challenge==cha:
+                    lis.Status=True
+                    lis.save()
+                    break
+                else:
+                    lis.Status=False
+                    lis.save()
+    return redirect('/challenge')
 
 @login_required
 def delete_task(request,do_id):

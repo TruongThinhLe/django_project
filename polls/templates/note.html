@@ -5,7 +5,7 @@
 	{%load static%}
 	{%load custom_tags%}
     <link rel="stylesheet" href="{%static 'css/style.css'%}">
-    <link rel="stylesheet" href="{%static 'css/style_plan.css'%}">
+    <link rel="stylesheet" href="{%static 'css/style_challengnote.css'%}">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@600&family=Oswald&display=swap">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
@@ -16,13 +16,38 @@
         <a href="{% url 'polls:index'%}"><img src="{%static 'image/1.png'%}"></a>
         <h1>Automatic Speed Effective</h1>
      </div>
+    <form class="form" method="POST">
+        {%csrf_token%}
+        {{form}}
+        <input type="submit" value="submit" name="submit">
+    </form>
+    <div class="note">
+        <ul>
+        {%for data in note_data%}
+            <li id="{{data.id}}" class="note_data">{{data}}:
+                <div class="extend"  style="display:none;"> {{data.Detail}}</div>
+                <a href="{%url 'polls:delete_note' data.id%}"> Delete </a>
+            </li>
+        {%endfor%}
+        </ul>
+    </div>
 
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	{%block javascript %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	{%block javascript%}
 	<script>
-		$(document).ready(function(){
-		});
-	</script>
-	{%endblock javascript%}
+        $(document).ready(function(){
+            $(".note_data").click(function(){
+                var a=$(this).children("div").css("display")
+                //console.log(a)
+                if(a=="none"){
+                    $(this).children("div").css("display","block");
+                }
+                else{
+                    $(this).children("div").css("display","none");
+                }
+            });
+        });
+    </script>
+    {%endblock javascript%}
 </body>
 </html>

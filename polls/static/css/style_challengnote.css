@@ -1,0 +1,40 @@
+
+.note{
+  display:flex;
+}
+.extend{
+    border-radius: 5%;
+    font-size: 1.5vmin;
+    margin-left: 10%;
+    border:outset;
+    margin-bottom: 3px;
+    padding: 2%;
+}
+.note>ul{
+    width: 100%;
+}
+.note_data{
+    font-size:2.5vmin;
+    border-bottom: solid 1px rgb(0,0,0);
+    padding:5%;
+    font-weight:lighter;
+}
+.note>ul>li>a{
+    font-size:1.5vmin;
+    position:relative;
+    text-decoration: none;
+    color:rgb(165, 114, 114);
+    width: 100%;
+}
+.label{
+    font-size: 2.5vmin;
+    padding-right: 10%;
+    color: rgb(160, 116, 63);
+}
+.note_data>a{
+    font-size:1.5vmin;
+    position:relative;
+    text-decoration: none;
+    color:rgb(165, 114, 114);
+    width: 100%;
+}

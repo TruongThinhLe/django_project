@@ -5,7 +5,7 @@
 	{%load static%}
 	{%load custom_tags%}
     <link rel="stylesheet" href="{%static 'css/style.css'%}">
-    <link rel="stylesheet" href="{%static 'css/style_plan.css'%}">
+    <link rel="stylesheet" href="{%static 'css/style_challengnote.css'%}">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@600&family=Oswald&display=swap">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
@@ -16,7 +16,28 @@
         <a href="{% url 'polls:index'%}"><img src="{%static 'image/1.png'%}"></a>
         <h1>Automatic Speed Effective</h1>
      </div>
-
+    <form class="form" method="POST">
+        {%csrf_token%}
+        {{form}}
+        <input type="submit" value="submit" name="submit">
+    </form>
+    <form class="challenge" action="{%url 'polls:update_challenge'%}" method="GET">
+        <ul>
+        {%for data in challenge%}
+            <li id="{{data.id}}" class="note_data">
+                {%if data.Status is True %}
+                    <label  class="label" for="{{data.Challenge}}">{{data}}  ({{data.Time_pub|date:"d m,Y"}}) </label><span><input type="checkbox"  checked name="{{data.Challenge}}"></span>
+                {%else%}
+                    <label class="label" for="{{data.Challenge}}">{{data}}  ({{data.Time_pub|date:"d m,Y"}}) </label><span><input type="checkbox"  name="{{data.Challenge}}"></span>
+                {%endif%}
+                <div class="extend"  style="display:none;"> {{data.Detail}}</div>
+                <a href="{%url 'polls:delete_challenge' data.id%}"> Delete </a>
+            </li>
+        {%endfor%}
+        </ul>
+        <input type="submit" value="submit" name="submit">
+    </form>
+    
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	{%block javascript %}
 	<script>

@@ -17,5 +17,8 @@ urlpatterns=[path('logout/',views.logout,name="logout")
 ,path('search_word',views.search_word,name="search_word")
 ,path('check_done',views.check_done,name="check_done")
 ,path('delete_task/<do_id>/',views.delete_task,name='delete_task')
+,path('delete_note/<note_id>/',views.delete_note,name='delete_note')
+,path('delete_challenge/<challenge_id>/',views.delete_challenge,name='delete_challenge')
+,path('update_challenge',views.update_challenge,name="update_challenge")
 ,
 ]

@@ -37,4 +37,15 @@ class Todo_form(forms.ModelForm):
 class LoginForm(forms.Form):
     username=forms.CharField()
     password=forms.CharField(widget=forms.PasswordInput(attrs={"class":"loginform"}))
-    
+
+class Note_Form(forms.ModelForm):
+    class Meta:
+        model=Note
+        fields=["Note","Detail"]
+        widgets={'Note':forms.Textarea(attrs={'rows':'2'}),'Detail':forms.Textarea(attrs={'rows':'2'})}
+
+class Challenge_form(forms.ModelForm):
+    class Meta:
+        model=Challenge
+        fields=["Challenge"]
+        widgets={'Challenge':forms.Textarea(attrs={'rows':'1'})}

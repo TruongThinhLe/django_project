@@ -35,14 +35,16 @@ class Sub_do():
         return self.day
 
 class Note(models.Model):
-    Note=TextField()
+    Note=TextField(max_length=50)
     Time_pub=DateField(auto_now_add=True)
+    Detail=TextField(max_length=100)
     def __str__(self):
         return self.Note
 
 class Challenge(models.Model):
-    Challenge=TextField()
+    Challenge=TextField(max_length=50)
     Time_pub=DateField(auto_now_add=True)
+    Status=BooleanField(default=False)
     def __str__(self):
         return self.Challenge
     
