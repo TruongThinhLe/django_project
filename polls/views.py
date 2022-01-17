@@ -174,7 +174,7 @@ def challenge(request):
         if form.is_valid():
             form.save()
             return redirect('/challenge')
-    challenge=Challenge.objects.all()
+    challenge=Challenge.objects.all().order_by('-Time_pub','-id')
     context={"form":form,'challenge':challenge}
     return render(request,'challenge.html',context)
 
