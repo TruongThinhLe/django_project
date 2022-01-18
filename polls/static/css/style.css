@@ -67,6 +67,19 @@ body{
     border-radius:30px;
     background-color: #F8F0DF;
 }
+.card > div {
+    display:block;
+    width: 100%;
+    color:rgb(82, 16, 16);
+    font-size: 2vmax;
+    margin:10px;
+    padding:20px;
+    text-align: center;
+    border: 1px solid rgb(197, 207, 198);
+    box-shadow: 0px 10px 20px 5px #79B4B7;
+    border-radius:30px;
+    background-color: #F8F0DF;
+}
 .form_contain{
     display: flex;
     flex-direction: row;
@@ -97,12 +110,13 @@ label{
     
 }
 input[type="checkbox"]{
-    width: 15px;
-    height: 15px;
+    width: 24px;
+    height: 24px;
 }
 .Tasks>li>span{
     position: absolute;
     right:50px;
+    margin-right:20px ;
 }
 .Tasks>li{
     list-style-type:armenian;
@@ -125,9 +139,9 @@ input[type="submit"]{
     display: inline;
     position: absolute;
     right:10px;
-    font-size: 3vh;
+    font-size: 1.5vh;
     color:black;
-    margin-left: 4px;
+
 }
 #Logout{
     margin-top: 20px;
@@ -151,7 +165,18 @@ table {
   td {
     border: 1px solid #dddddd;
   }
-  
+  .Status{
+      color:rgb(155, 123, 83);
+      position: sticky;
+      position: -webkit-sticky;
+      bottom:0;
+      background-color: rgb(248, 240, 223,0.5);
+      box-shadow: 0px 10px 20px 5px #b79579;
+      width: 18%;
+      border-radius: 5px;
+      padding: 0.5%;
+      font-size: 1vmax;
+  }
   
 
 @media screen and (max-width:600px){

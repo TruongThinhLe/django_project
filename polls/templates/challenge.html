@@ -26,9 +26,9 @@
         {%for data in challenge%}
             <li id="{{data.id}}" class="note_data">
                 {%if data.Status is True %}
-                    <label  class="label" for="{{data.Challenge}}">{{data}}  ({{data.Time_pub|date:"d m,Y"}}) </label><span><input type="checkbox"  checked name="{{data.Challenge}}"></span>
+                    <label  class="label" for="{{data.Challenge}}">{{data}}  ({{data.Time_pub|date:"d m,Y"}}) </label><span><input class="input_box" type="checkbox"  checked name="{{data.Challenge}}"></span>
                 {%else%}
-                    <label class="label" for="{{data.Challenge}}">{{data}}  ({{data.Time_pub|date:"d m,Y"}}) </label><span><input type="checkbox"  name="{{data.Challenge}}"></span>
+                    <label class="label" for="{{data.Challenge}}">{{data}}  ({{data.Time_pub|date:"d m,Y"}}) </label><span><input class="input_box" type="checkbox"  name="{{data.Challenge}}"></span>
                 {%endif%}
                 <div class="extend"  style="display:none;"> {{data.Detail}}</div>
                 <a href="{%url 'polls:delete_challenge' data.id%}"> Delete </a>

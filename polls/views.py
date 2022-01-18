@@ -84,7 +84,12 @@ def index(request):
         re_task.append(tas)
     print(re_task)
 
-    context={'todo':todo_today,'form':form,'tomr_do':todo_tommorrow,'count_today':count_today,'count_tommor':count_tommor,'re_task':re_task}
+    note=Note.objects.filter(Time_pub=current)
+    challenge=Challenge.objects.filter(Status=False)
+
+    status={'st_note':len(note),'st_challenge':len(challenge)}
+
+    context={'todo':todo_today,'form':form,'tomr_do':todo_tommorrow,'count_today':count_today,'count_tommor':count_tommor,'re_task':re_task,'status':status}
     return render(request,'index.html',context)
 
 @login_required

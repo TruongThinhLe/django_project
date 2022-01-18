@@ -26,7 +26,7 @@
         {%for data in note_data%}
             <li id="{{data.id}}" class="note_data">{{data}}:
                 <div class="extend"  style="display:none;"> {{data.Detail}}</div>
-                <a href="{%url 'polls:delete_note' data.id%}"> Delete </a>
+                <span><a href="{%url 'polls:delete_note' data.id%}"> Delete </a></span>
             </li>
         {%endfor%}
         </ul>
