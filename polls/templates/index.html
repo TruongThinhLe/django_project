@@ -91,8 +91,9 @@
 	{%endfor%}
 </div>
 <div class="Status">
-	<div>You have {{status.st_note}}/5 note today</div>
-	<div>You have {{status.st_challenge}} challenge not done </div>
+	<div>You have {{status.st_note}}/5 note(s) today</div>
+	<div>You have {{status.st_challenge}} challenge(s) not done </div>
+	<div>You have {{status.st_plan}} plan(s) in urgent</div>
 </div>
 <a href="{%url 'polls:logout' %}" id="Logout">Log Out</a>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>

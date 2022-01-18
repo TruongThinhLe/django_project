@@ -10,7 +10,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login as dj_login ,logout as dj_logout
 from django.contrib.auth.decorators import login_required
 from .auto import *
-
+from .algorithm import rate
 
 def logout(request):
     dj_logout(request)
@@ -86,8 +86,13 @@ def index(request):
 
     note=Note.objects.filter(Time_pub=current)
     challenge=Challenge.objects.filter(Status=False)
+    plan=Plan.objects.all()
+    st_plan=0
+    for pl in plan:
+        if rate(pl.date_end,pl.date_start)>60:
+            st_plan+=1
 
-    status={'st_note':len(note),'st_challenge':len(challenge)}
+    status={'st_note':len(note),'st_challenge':len(challenge),'st_plan':st_plan}
 
     context={'todo':todo_today,'form':form,'tomr_do':todo_tommorrow,'count_today':count_today,'count_tommor':count_tommor,'re_task':re_task,'status':status}
     return render(request,'index.html',context)
