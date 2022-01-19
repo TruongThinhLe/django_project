@@ -36,9 +36,9 @@
 	<ul class="Tasks">
 	{%for do in todo %}
 	{%if do.Check_done is True %}
-		<li><label for="{{do.Task_todo}}">{{do.Task_todo}} <span style="font-size:2vh;">{{do.Time_todo}}(h)</span></label><input class="input_box" type="checkbox"  checked="checked" name="{{do.Task_todo}}"><a class="delete_task" href="{%url 'polls:delete_task' do.id%}" >Delete</a></li>
+		<li><label for="{{do.Task_todo}}">{{do.Task_todo}} <span style="font-size:1vh;">{{do.Time_todo}}(h)</span></label><input class="input_box" type="checkbox"  checked="checked" name="{{do.Task_todo}}"><a class="delete_task" href="{%url 'polls:delete_task' do.id%}" >Delete</a></li>
 		{%else%}
-		<li><label for="{{do.Task_todo}}">{{do.Task_todo}} <span style="font-size:2vh;">{{do.Time_todo}}(h)</span></label><input class="input_box" type="checkbox"  name="{{do.Task_todo}}"><a class="delete_task" href="{%url 'polls:delete_task' do.id %}" >Delete</a></li>
+		<li><label for="{{do.Task_todo}}">{{do.Task_todo}} <span style="font-size:1vh;">{{do.Time_todo}}(h)</span></label><input class="input_box" type="checkbox"  name="{{do.Task_todo}}"><a class="delete_task" href="{%url 'polls:delete_task' do.id %}" >Delete</a></li>
 	{%endif%}
 	{%endfor%}
 	</ul>
@@ -64,7 +64,7 @@
 		<li><label>{{do.Task_todo}}</label><a class="delete_task" href="{%url 'polls:delete_task' do.id %}" >Delete</a></li>
 	</ul>
 	{%endfor%}
-	<span>Total hours:{{count_tommor}} </span>
+	<span style="font-size: 1vmax;">Total hours:{{count_tommor}} </span>
 </div>
 <div>
 	{%for task in re_task%}

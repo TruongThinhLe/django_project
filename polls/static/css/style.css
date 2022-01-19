@@ -105,10 +105,10 @@ body{
 }
 label{
     color:rgb(23, 72, 92);
-    font-size:2vmax;
+    font-size:1.5vmax;
     font-weight: 50;
-    
 }
+
 input[type="checkbox"]{
     width: 24px;
     height: 24px;
