@@ -112,17 +112,19 @@ label{
 input[type="checkbox"]{
     width: 24px;
     height: 24px;
-}
-.Tasks>li>span{
     position: absolute;
-    right:50px;
-    margin-right:20px ;
+    right:0px;
 }
+input[type="checkbox"]:checked~.checkmark{
+    background-color: blue;
+}
+
 .Tasks>li{
     list-style-type:armenian;
     width: 100%;
     padding-left: 5vh;
     border-bottom: solid 1px rgb(197, 207, 198);
+    display:inline;
 }
 input[type="submit"]{
     background-color: rgba(215, 244, 255, 0.938);
@@ -139,7 +141,7 @@ input[type="submit"]{
     display: inline;
     position: absolute;
     right:10px;
-    font-size: 1.5vh;
+    font-size: 1.5vmax;
     color:black;
 
 }
@@ -177,7 +179,6 @@ table {
       padding: 0.5%;
       font-size: 1vmax;
   }
-  
 
 @media screen and (max-width:600px){
     .container{

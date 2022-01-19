@@ -112,6 +112,12 @@ label{
 input[type="checkbox"]{
     width: 24px;
     height: 24px;
+    position: absolute;
+    right:10vw;
+}
+input[type="checkbox"]:checked{
+    background: blue;
+    color:blue;
 }
 .Tasks>li>span{
     position: absolute;
