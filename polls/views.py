@@ -40,7 +40,7 @@ def index(request):
     #=Plan.objects.filter(pub_date__week=current).order_by('-pub_date','-id')
     plans=Plan.objects.all()
     for plan in plans:
-        if (plan.date_end>=current) and (plan.date_start<=current):
+        if (plan.date_end>=current) and (plan.date_start<=current) and ((plan.date_start-current).days%plan.period_day==0):
             if(List_todo.objects.filter(Task_todo=plan.plan,Day_todo=current).exists()) :
                 #todo_s=List_todo.objects.get(Task_todo=plan.plan)
                 #todo_s.Day_todo=current
@@ -83,7 +83,12 @@ def index(request):
         tas=Sub_do(day)
         re_task.append(tas)
     print(re_task)
-
+    #xu ly cho status update
+    note_all=list(Note.objects.filter(Time_pub__lt=current))
+    review_note=[]
+    for no in note_all:
+        if ((no.Time_pub-current).days%3==0):
+            review_note.append(no)
     note=Note.objects.filter(Time_pub=current)
     challenge=Challenge.objects.filter(Status=False)
     plan=Plan.objects.all()
@@ -94,7 +99,7 @@ def index(request):
 
     status={'st_note':len(note),'st_challenge':len(challenge),'st_plan':st_plan}
 
-    context={'todo':todo_today,'form':form,'tomr_do':todo_tommorrow,'count_today':count_today,'count_tommor':count_tommor,'re_task':re_task,'status':status}
+    context={'todo':todo_today,'form':form,'tomr_do':todo_tommorrow,'count_today':count_today,'count_tommor':count_tommor,'re_task':re_task,'status':status,'review_note':review_note}
     return render(request,'index.html',context)
 
 @login_required

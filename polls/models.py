@@ -18,6 +18,7 @@ class Plan(models.Model):
     date_start=models.DateField()
     status=models.IntegerField(null=True)
     time_todo=models.DecimalField(max_digits=10,decimal_places=2)
+    period_day=models.IntegerField(default=1)
     
 class List_todo(models.Model):
     Day_todo=DateField(null=True)

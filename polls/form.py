@@ -25,7 +25,7 @@ class DateInput(forms.DateInput):
 class Plan_form(forms.ModelForm):
     class Meta:
         model=Plan
-        fields=['plan','date_end','date_start','time_todo']
+        fields=['plan','date_end','date_start','time_todo','period_day']
         widgets={'date_end':DateInput(),'date_start':DateInput()}
 
 class Todo_form(forms.ModelForm):

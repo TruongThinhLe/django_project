@@ -30,7 +30,7 @@
  </div>
 
  
- <div class="">
+
 	 <div class="Todo">Daily do</div>
 	<form action="{%url 'polls:check_done'%}" method="GET">
 	<ul class="Tasks">
@@ -43,8 +43,13 @@
 	{%endfor%}
 	</ul>
 	<input type="submit" value="Submit" ><span>  Total hours:{{count_today}} </span>
+	<div class="Review">Review</div>
+	<ul class="Tasks">
+		{%for review in review_note%}
+			<li>{{review}}</li>
+			{%endfor%}
+	</ul>
 	</form>
-</div>
 
 	<form action="" method="POST" class="form">
 		<label for="new_word">New </label>
@@ -57,18 +62,19 @@
 		<input type="submit" value="Enter"  >
 	</form>	
 
-<div class="">
+
 	<div class="Todo">Next day</div>
 	{%for do in tomr_do %}
 	<ul class="Tasks">
 		<li><label>{{do.Task_todo}}</label><a class="delete_task" href="{%url 'polls:delete_task' do.id %}" >Delete</a></li>
 	</ul>
 	{%endfor%}
-	<span style="font-size: 1vmax;">Total hours:{{count_tommor}} </span>
-</div>
+	<span style="font-size: 1vmax;border-bottom: 1px solid rgb(197, 207, 198);">Total hours:{{count_tommor}} </span>
+
+
+
 <div>
 	{%for task in re_task%}
-	
 	<table>
 		<tr>
 			<th>Task - {{task.day}}</th>
@@ -89,6 +95,7 @@
 		{%endfor%}
 	</table>
 	{%endfor%}
+</div>
 </div>
 <div class="Status">
 	<div>You have {{status.st_note}}/5 note(s) today</div>
