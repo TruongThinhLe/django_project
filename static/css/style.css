@@ -103,6 +103,7 @@ body{
     font-size:3vmax;
     font-weight: bolder;
 }
+
 label{
     color:rgb(23, 72, 92);
     font-size:1.5vmax;
@@ -129,6 +130,14 @@ input[type="checkbox"]:checked{
     width: 100%;
     padding-left: 5vh;
     border-bottom: solid 1px rgb(197, 207, 198);
+}
+.Review{
+    list-style-type:armenian;
+    width: 100%;
+    padding-left: 5vh;
+    border-bottom: solid 1px rgb(197, 207, 198);
+    font-size:1.75vmax;
+    background-color: rgba(23, 72, 92, 0.301);
 }
 input[type="submit"]{
     background-color: rgba(215, 244, 255, 0.938);
@@ -183,8 +192,6 @@ table {
       padding: 0.5%;
       font-size: 1vmax;
   }
-  
-
 @media screen and (max-width:600px){
     .container{
         width: 100%;
