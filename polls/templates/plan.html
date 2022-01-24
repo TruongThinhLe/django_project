@@ -34,7 +34,7 @@
 		{%if plans %}
 		{% for pl in plans %}
                 <li>
-		    <div class="process_title">{{pl.plan}}</div>
+		    <div class="process_title">{{pl.plan}}  /{{pl.period_day}}</div>
                     <div class="process_bar">
                         <div class="bar_back">
 			{% if pl.status >= 0 %}
