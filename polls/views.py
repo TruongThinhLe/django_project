@@ -309,4 +309,13 @@ def delete_task(request,do_id):
     task=List_todo.objects.get(pk=do_id)
     task.delete()
     return redirect('/index')
+
+@login_required
+def review_task(request):
+    if request.method=='GET':
+        data=request.GET.get('id')
+        data_req=Note.objects.get(pk=data)
+        return JsonResponse({'data':data_req.Detail},status=200)
+    return JsonResponse({},status=400)
+
 # Create your views here.

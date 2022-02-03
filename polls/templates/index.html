@@ -44,9 +44,10 @@
 	</ul>
 	<input type="submit" value="Submit" ><span>  Total hours:{{count_today}} </span>
 	<div class="Review">Review</div>
-	<ul class="Tasks">
+	<ul class="Tasks" style="height:200px;
+    overflow-y: scroll;">
 		{%for review in review_note%}
-			<li>{{review}}</li>
+			<li class="review_task" id-do="{{review.id}}">{{review}}</li>
 			{%endfor%}
 	</ul>
 	</form>
@@ -107,7 +108,14 @@
 	{%block javascript%}
 <script>
 	$(document).ready(function(){
-		
+		$(".review_task").click(function(){
+			var id=$(this).attr('id-do')
+			var data="id="+id
+			$.get("{%url 'polls:review_task' %}",data)
+			.done(function(response){
+				alert(response["data"])
+			})
+		})
 	})
 </script>
 	{%endblock javascript%}
