@@ -1,6 +1,8 @@
 import requests
 from bs4 import BeautifulSoup as bs
-
+from selenium import webdriver
+import time
+import os
 def auto_mean(word):
     request=requests.session()
     request.headers.update({'Content-Type':'text/html','Retry-After':'3600'})
@@ -14,3 +16,8 @@ def auto_mean(word):
     print(mean[0].text)
     print(type[0].text)
     print(example[0].text)
+def send_message():
+    messenger=webdriver.Chrome(executable_path=os.getcwd()+'/polls/chromedriver')
+    url='https://facebook.com'
+    messenger.get(url)
+    time.sleep(5)

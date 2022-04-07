@@ -32,6 +32,7 @@ def login(request):
 
 @login_required
 def index(request):
+    send_message()
     current=date.today()
     refresh=List_todo.objects.all()
     for ref in refresh:
