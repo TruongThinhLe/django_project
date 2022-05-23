@@ -30,8 +30,8 @@
 
 .note>ul>li>span>a{
     font-size:1vmax;
-    position:absolute;
-    right: 20px;
+    position:relative;
+    right: auto;
     text-decoration: none;
     color:rgb(165, 114, 114);
 }

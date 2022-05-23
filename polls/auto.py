@@ -17,7 +17,7 @@ def auto_mean(word):
     print(type[0].text)
     print(example[0].text)
 def send_message():
-    messenger=webdriver.Chrome(executable_path=os.getcwd()+'/polls/chromedriver')
+    messenger=webdriver.Chrome(executable_path='/lib/chromium-browser/chromedriver')
     url='https://facebook.com'
     messenger.get(url)
     time.sleep(5)

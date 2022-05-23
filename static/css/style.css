@@ -138,6 +138,7 @@ input[type="checkbox"]:checked{
     border-bottom: solid 1px rgb(197, 207, 198);
     font-size:1.75vmax;
     background-color: rgba(23, 72, 92, 0.301);
+
 }
 input[type="submit"]{
     background-color: rgba(215, 244, 255, 0.938);
