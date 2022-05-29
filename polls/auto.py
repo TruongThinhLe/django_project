@@ -3,6 +3,7 @@ from bs4 import BeautifulSoup as bs
 from selenium import webdriver
 import time
 import os
+import subprocess
 def auto_mean(word):
     request=requests.session()
     request.headers.update({'Content-Type':'text/html','Retry-After':'3600'})
@@ -21,3 +22,8 @@ def send_message():
     url='https://facebook.com'
     messenger.get(url)
     time.sleep(5)
+def st_storage():
+    cmd1=subprocess.run(['df','-h'],stdout=subprocess.PIPE,text=True)
+    storage=cmd1.stdout[cmd1.stdout.find('root'):cmd1.stdout.find('devtmpfs')]
+    return storage.replace('root','storage')
+    

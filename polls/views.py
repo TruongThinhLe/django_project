@@ -32,7 +32,8 @@ def login(request):
 
 @login_required
 def index(request):
-    #send_message()   
+    #send_message()
+    storage=st_storage()
     current=date.today()
     refresh=List_todo.objects.all()
     for ref in refresh:
@@ -100,7 +101,7 @@ def index(request):
 
     status={'st_note':len(note),'st_challenge':len(challenge),'st_plan':st_plan}
 
-    context={'todo':todo_today,'form':form,'tomr_do':todo_tommorrow,'count_today':count_today,'count_tommor':count_tommor,'re_task':re_task,'status':status,'review_note':review_note}
+    context={'todo':todo_today,'form':form,'tomr_do':todo_tommorrow,'count_today':count_today,'count_tommor':count_tommor,'re_task':re_task,'status':status,'review_note':review_note,'storage':storage}
     return render(request,'index.html',context)
 
 @login_required
